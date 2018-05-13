@@ -7,4 +7,7 @@
   <ItemGroup>
     <Compile Remove="Class1.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Chromosome\" />
+  </ItemGroup>
 </Project>
