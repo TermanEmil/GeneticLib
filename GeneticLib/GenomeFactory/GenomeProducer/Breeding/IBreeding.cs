@@ -1,10 +1,14 @@
 ﻿using System;
-namespace GeneticLib.GenomeFactory.Breeding
+using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover;
+using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Selection;
+using GeneticLib.GenomeFactory.Mutation;
+
+namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 {
-    public class IBreeding
+	public interface IBreeding : IGenomeProducer
     {
-        public IBreeding()
-        {
-        }
+		ISelection Selection { get; set; }
+		ICrossover Crossover { get; set; }
+		MutationManager MutationManager { get; set; }
     }
 }

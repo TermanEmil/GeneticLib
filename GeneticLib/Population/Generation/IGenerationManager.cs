@@ -1,12 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using GeneticLib.Genome;
 
-namespace GeneticLib.Generation
+namespace GeneticLib.Population.Generation
 {
 	/// <summary>
     /// Or GenerationStrategy.
 	/// Defines the logic of saving generations.
+	/// Maybe, crossover for example, requires to analyze more than the previous
+	/// generation.
     /// </summary>
 	public interface IGenerationManager
     {
+		List<Generation> Generations { get; }
+		List<IGenome> BestGenomes { get; }
+
+		void RegisterNewGeneration(Generation newGeneration);
     }
 }

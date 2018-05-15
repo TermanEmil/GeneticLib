@@ -1,5 +1,6 @@
 ﻿using System;
-namespace GeneticLib
+
+namespace GeneticLib.Genome
 {
 	public struct Gene : IEquatable<Gene>
 	{

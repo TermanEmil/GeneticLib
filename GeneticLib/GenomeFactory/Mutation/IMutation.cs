@@ -1,10 +1,10 @@
 ﻿using System;
+using GeneticLib.Genome;
+
 namespace GeneticLib.GenomeFactory.Mutation
 {
-    public class IMutation
+	public interface IMutation
     {
-        public IMutation()
-        {
-        }
+		void Mutate(IGenome genome);
     }
 }

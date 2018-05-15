@@ -1,10 +1,10 @@
 ﻿using System;
+
 namespace GeneticLib.Genome
 {
-    public class IGenome
+	public interface IGenome : ICloneable
     {
-        public IGenome()
-        {
-        }
+		Gene[] Genes { get; set; }
+		float Fitness { get; set; }
     }
 }

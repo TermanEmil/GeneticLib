@@ -1,10 +1,10 @@
 ﻿using System;
+using GeneticLib.GenomeFactory.Mutation;
+
 namespace GeneticLib.GenomeFactory.GenomeProducer.Reinsertion
 {
-    public class IRensertion
+	public interface IRensertion : IGenomeProducer
     {
-        public IRensertion()
-        {
-        }
+		MutationManager MutationManager { get; set; }
     }
 }
