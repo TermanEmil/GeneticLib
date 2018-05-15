@@ -20,7 +20,7 @@ namespace GeneticLib.Genome
 		{
 			if (Value == null)
 				return 0;
-			
+
 			return Value.GetHashCode();
 		}
 
@@ -35,13 +35,14 @@ namespace GeneticLib.Genome
 			return Value == null ? String.Empty : "G: " + Value.ToString();
 		}
 
-		public static bool operator == (Gene first, Gene second)
+		public static bool operator ==(Gene first, Gene second)
 		{
 			return first.Equals(second);
 		}
 
-		public static bool operator != (Gene first, Gene second)
-        {
+		public static bool operator !=(Gene first, Gene second)
+		{
 			return !(first == second);
-        }
+		}
+	}
 }

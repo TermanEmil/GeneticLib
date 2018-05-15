@@ -62,7 +62,10 @@ namespace GeneticLib.GenomeFactory
 			GenomeProductionSession totalSession,
 			IGenomeProducer producer)
 		{
-			var requiredNb = GetProducerNbOfGenomesToMake(totalRequired, producer);
+			var requiredNb = GetProducerNbOfGenomesToMake(
+				totalSession.requiredNb,
+				producer);
+			
             var thisSession = new GenomeProductionSession(requiredNb);
             producer.Produce(
                 generationManager,

@@ -3,45 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using GeneticLib.Genome;
 using GeneticLib.Randomness;
+using System.Collections.Specialized;
+using System.Collections;
 
 namespace GeneticLib.GenomeFactory.Mutation
 {
+	public enum EMutationType
+	{
+		/// <summary>
+        /// It's possible for all these mutations to be applied.
+        /// </summary>
+		Independent,
+
+		/// <summary>
+        /// Only one mutation will happen, if any. Normally, the sum of
+        /// these chances should not exceed 1. If it's 1, there will always be
+        /// one of these mutations.
+        /// </summary>
+        Dependent,
+
+		/// <summary>
+        /// Mutations that will happen no matter the chances.
+        /// If a more complicated mutation is needed, it should be put here.
+        /// It's basically an independent mutation with the chance of 1.
+        /// </summary>
+        Required
+	}
+
+	public class MutationEntry
+    {
+		public IMutation mutation;
+        public float chance;
+		public EMutationType mutationType;
+    }
+
 	/// <summary>
 	/// Both Dependent and Independent mutations (e.g. DependentMutationsChance)
 	/// have a chance to be applied. Normally it's 1, but it can be configured.
     /// </summary>
 	public class MutationManager
 	{
-		/// <summary>
-        /// The order in which the mutations will be applied.
-        /// </summary>
-		public List<IMutation> MutationOrder { get; set; } =
-			new List<IMutation>();
-
-        /// <summary>
-        /// Only one mutation will happen, if any. Normally, the sum of
-		/// these chances should not exceed 1. If it's 1, there will always be
-		/// one of these mutations.
-        /// </summary>
 		public float DependentMutationsChance { get; set; } = 1;
-		public Dictionary<IMutation, float> DependentMutations { get; set; } =
-			new Dictionary<IMutation, float>();
-
-        /// <summary>
-        /// It's possible for all these mutations to be applied.
-        /// </summary>
 		public float IndependentMutationsChance { get; set; } = 1;
-		public Dictionary<IMutation, float> IndependentMutations { get; set; } =
-			new Dictionary<IMutation, float>();
+              
+		public List<MutationEntry> MutationEntries { get; set; } =
+			new List<MutationEntry>();
 
-        /// <summary>
-        /// Mutations that will happen no matter the chances.
-		/// If a more complicated mutation is needed, it should be put here.
-		/// It's basically an independent mutation with the chance of 1.
-        /// </summary>
-		public List<IMutation> RequiredMutations { get; set; } =
-			new List<IMutation>();
-  
 		public void ApplyMutations(IGenome genome)
 		{
 			bool dependentMutationsAreOn = true;
@@ -53,32 +60,33 @@ namespace GeneticLib.GenomeFactory.Mutation
 
 			if (IndependentMutationsChance <= 0.999f)
 				independentMutationsAreOn = GARandomManager.NextFloat() < IndependentMutationsChance;
-
-			foreach (var mutation in MutationOrder)
+                
+			foreach (var mutationEntry in MutationEntries)
 			{
-				if (dependentMutationsAreOn)
+				switch (mutationEntry.mutationType)
 				{
-					if (DependentMutations.ContainsKey(mutation))
-					{
-						if (dependentMutationsValue <= DependentMutations[mutation])
-							mutation.Mutate(genome);
-						dependentMutationsValue -= DependentMutations[mutation];
-					}
-				}
-				else if (independentMutationsAreOn)
-				{
-					if (IndependentMutations.ContainsKey(mutation))
-					{
-						if (GARandomManager.NextFloat() <= IndependentMutations[mutation])
-							mutation.Mutate(genome);
-					}
-				}
-				else
-				{
-					if (RequiredMutations.Contains(mutation))
-						mutation.Mutate(genome);
+					case EMutationType.Dependent:
+						if (!dependentMutationsAreOn)
+							break;
+						
+						if (dependentMutationsValue <= mutationEntry.chance)
+							mutationEntry.mutation.Mutate(genome);
+						dependentMutationsValue -= mutationEntry.chance;
+						break;
+					
+					case EMutationType.Independent:
+						if (!independentMutationsAreOn)
+							break;
+						
+						if (GARandomManager.NextFloat() <= mutationEntry.chance)
+							mutationEntry.mutation.Mutate(genome);
+						break;
+					
+					case EMutationType.Required:
+						mutationEntry.mutation.Mutate(genome);
+						break;
 				}
 			}
 		}
-    }
+    }   
 }
