@@ -7,6 +7,7 @@
   <ItemGroup>
     <Compile Remove="Class1.cs" />
     <Compile Remove="GenomeFactory\GenomeProducer\Breeding\BreedingSession.cs" />
+    <Compile Remove="GAManager\GAManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Genome\" />
@@ -19,7 +20,7 @@
     <Folder Include="GenomeFactory\Mutation\" />
     <Folder Include="GenomeFactory\GenomeProducer\Breeding\Crossover\" />
     <Folder Include="GenomeFactory\GenomeProducer\Breeding\Selection\" />
-    <Folder Include="GAManager\" />
     <Folder Include="Randomness\" />
+    <Folder Include="GeneticManager\" />
   </ItemGroup>
 </Project>

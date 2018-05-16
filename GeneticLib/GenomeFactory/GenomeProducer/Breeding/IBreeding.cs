@@ -5,7 +5,7 @@ using GeneticLib.GenomeFactory.Mutation;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 {
-	public interface IBreeding : IGenomeProducer
+	public interface IBreeding : IMinBreeding
     {
 		ISelection Selection { get; set; }
 		ICrossover Crossover { get; set; }

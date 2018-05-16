@@ -13,7 +13,6 @@ namespace GeneticLib.Population.Generation
 	public interface IGenerationManager
     {
 		List<Generation> Generations { get; }
-		List<IGenome> BestGenomes { get; }
 
 		void RegisterNewGeneration(Generation newGeneration);
     }
