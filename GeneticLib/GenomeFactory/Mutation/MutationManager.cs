@@ -30,7 +30,7 @@ namespace GeneticLib.GenomeFactory.Mutation
         Required
 	}
 
-	public class MutationEntry
+	public struct MutationEntry
     {
 		public IMutation mutation;
         public float chance;
@@ -62,7 +62,6 @@ namespace GeneticLib.GenomeFactory.Mutation
 				independentMutationsAreOn = GARandomManager.NextFloat() < IndependentMutationsChance;
                 
 			foreach (var mutationEntry in MutationEntries)
-			{
 				switch (mutationEntry.mutationType)
 				{
 					case EMutationType.Dependent:
@@ -86,7 +85,6 @@ namespace GeneticLib.GenomeFactory.Mutation
 						mutationEntry.mutation.Mutate(genome);
 						break;
 				}
-			}
 		}
     }   
 }

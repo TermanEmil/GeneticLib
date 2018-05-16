@@ -3262,7 +3262,7 @@
 											"containerExtending": false,
 											"left": 1029,
 											"top": 238,
-											"width": 1255,
+											"width": 1559,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
@@ -3334,7 +3334,7 @@
 									"containerExtending": false,
 									"left": 1024,
 									"top": 231,
-									"width": 1265,
+									"width": 1569,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -3385,7 +3385,7 @@
 							"containerExtending": false,
 							"left": 1024,
 							"top": 216,
-							"width": 1265,
+							"width": 1569,
 							"height": 1073,
 							"autoResize": false,
 							"stereotypeDisplay": "label",
@@ -3772,7 +3772,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+Selection: ISelection",
+											"text": "+Selection",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -3801,7 +3801,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+Crossover: ICrossover",
+											"text": "+Crossover",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -5872,7 +5872,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 1949,
-											"top": 670,
+											"top": 683,
 											"width": 129.70166015625,
 											"height": 13,
 											"autoResize": false,
@@ -5944,7 +5944,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 1944,
-									"top": 663,
+									"top": 676,
 									"width": 139.70166015625,
 									"height": 25,
 									"autoResize": false,
@@ -5970,37 +5970,6 @@
 									"model": {
 										"$ref": "AAAAAAFjXpzBoia1IqQ="
 									},
-									"subViews": [
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAFjX2DHVrYFKBI=",
-											"_parent": {
-												"$ref": "AAAAAAFjXpzBoya9Og8="
-											},
-											"model": {
-												"$ref": "AAAAAAFjX2DHMLXqTgE="
-											},
-											"visible": true,
-											"enabled": true,
-											"lineColor": "#000000",
-											"fillColor": "#ffffff",
-											"fontColor": "#000000",
-											"font": "Arial;13;0",
-											"showShadow": true,
-											"containerChangeable": false,
-											"containerExtending": false,
-											"left": 1949,
-											"top": 693,
-											"width": 129.70166015625,
-											"height": 13,
-											"autoResize": false,
-											"underline": false,
-											"text": "+MutationManager",
-											"horizontalAlignment": 0,
-											"verticalAlignment": 5,
-											"wordWrap": false
-										}
-									],
 									"visible": true,
 									"enabled": true,
 									"lineColor": "#000000",
@@ -6011,9 +5980,9 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 1944,
-									"top": 688,
+									"top": 701,
 									"width": 139.70166015625,
-									"height": 23,
+									"height": 10,
 									"autoResize": false
 								},
 								{
@@ -8204,12 +8173,12 @@
 									"subViews": [
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAFjY35BfJzC3tU=",
+											"_id": "AAAAAAFjZa1AeijmJMM=",
 											"_parent": {
 												"$ref": "AAAAAAFjY321Hpf/DwE="
 											},
 											"model": {
-												"$ref": "AAAAAAFjY35BXZyhZbg="
+												"$ref": "AAAAAAFjZa1AUijOoV8="
 											},
 											"visible": true,
 											"enabled": true,
@@ -8226,19 +8195,19 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+DependentMutations: Dictionary<IMutation float>",
+											"text": "+DependentMutationsChance: float",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
 										},
 										{
 											"_type": "UMLAttributeView",
-											"_id": "AAAAAAFjY4I86J/1Au0=",
+											"_id": "AAAAAAFjZa3EdS1SCi8=",
 											"_parent": {
 												"$ref": "AAAAAAFjY321Hpf/DwE="
 											},
 											"model": {
-												"$ref": "AAAAAAFjY4I8zZ/Ut1s="
+												"$ref": "AAAAAAFjZa3ERy06QWo="
 											},
 											"visible": true,
 											"enabled": true,
@@ -8255,36 +8224,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+IndependentMutations: Dictionary<IMutation float>",
-											"horizontalAlignment": 0,
-											"verticalAlignment": 5,
-											"wordWrap": false
-										},
-										{
-											"_type": "UMLAttributeView",
-											"_id": "AAAAAAFjY4VgzbN809c=",
-											"_parent": {
-												"$ref": "AAAAAAFjY321Hpf/DwE="
-											},
-											"model": {
-												"$ref": "AAAAAAFjY4Vgq7NbCYM="
-											},
-											"visible": true,
-											"enabled": true,
-											"lineColor": "#000000",
-											"fillColor": "#ffffff",
-											"fontColor": "#000000",
-											"font": "Arial;13;0",
-											"showShadow": true,
-											"containerChangeable": false,
-											"containerExtending": false,
-											"left": 1861,
-											"top": 484,
-											"width": 301,
-											"height": 13,
-											"autoResize": false,
-											"underline": false,
-											"text": "+RequiredMutations: List<IMutation>",
+											"text": "+IndependentMutationsChance: float",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -8302,7 +8242,7 @@
 									"left": 1856,
 									"top": 449,
 									"width": 311,
-									"height": 53,
+									"height": 38,
 									"autoResize": false
 								},
 								{
@@ -8334,7 +8274,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 1861,
-											"top": 507,
+											"top": 492,
 											"width": 301,
 											"height": 13,
 											"autoResize": false,
@@ -8363,7 +8303,7 @@
 											"containerChangeable": false,
 											"containerExtending": false,
 											"left": 1861,
-											"top": 522,
+											"top": 507,
 											"width": 301,
 											"height": 13,
 											"autoResize": false,
@@ -8384,7 +8324,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 1856,
-									"top": 502,
+									"top": 487,
 									"width": 311,
 									"height": 38,
 									"autoResize": false
@@ -8453,7 +8393,7 @@
 							"left": 1856,
 							"top": 424,
 							"width": 311,
-							"height": 116,
+							"height": 161,
 							"autoResize": false,
 							"stereotypeDisplay": "label",
 							"showVisibility": true,
@@ -8933,8 +8873,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1836,
-									"top": 595,
+									"left": 1816,
+									"top": 619,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -8967,8 +8907,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1844,
-									"top": 608,
+									"left": 1823,
+									"top": 632,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9001,8 +8941,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1821,
-									"top": 570,
+									"left": 1801,
+									"top": 592,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9035,8 +8975,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1897,
-									"top": 560,
+									"left": 1844,
+									"top": 604,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9069,8 +9009,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1902,
-									"top": 572,
+									"left": 1848,
+									"top": 617,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9103,8 +9043,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1887,
-									"top": 534,
+									"left": 1835,
+									"top": 578,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9137,8 +9077,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1776,
-									"top": 632,
+									"left": 1788,
+									"top": 633,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9171,8 +9111,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1785,
-									"top": 642,
+									"left": 1797,
+									"top": 644,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9205,7 +9145,7 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 1759,
+									"left": 1772,
 									"top": 611,
 									"width": 0,
 									"height": 13,
@@ -9286,7 +9226,7 @@
 								"$ref": "AAAAAAFjY321HZf5F7k="
 							},
 							"lineStyle": 1,
-							"points": "1912:540;1747:639",
+							"points": "1860:585;1759:639",
 							"stereotypeDisplay": "label",
 							"showVisibility": true,
 							"showProperty": true,
@@ -9355,7 +9295,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 2026,
-									"top": 582,
+									"top": 605,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9389,7 +9329,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 2041,
-									"top": 582,
+									"top": 604,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9423,7 +9363,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 1997,
-									"top": 583,
+									"top": 606,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9457,7 +9397,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 2027,
-									"top": 559,
+									"top": 604,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9491,7 +9431,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 2040,
-									"top": 561,
+									"top": 606,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9525,7 +9465,7 @@
 									"containerChangeable": false,
 									"containerExtending": false,
 									"left": 1999,
-									"top": 555,
+									"top": 600,
 									"width": 0,
 									"height": 13,
 									"autoResize": false,
@@ -9707,7 +9647,7 @@
 								"$ref": "AAAAAAFjY321HZf5F7k="
 							},
 							"lineStyle": 1,
-							"points": "2012:540;2013:639",
+							"points": "2012:585;2013:639",
 							"stereotypeDisplay": "label",
 							"showVisibility": true,
 							"showProperty": true,
@@ -9986,7 +9926,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+Produce(totalRequiredNb, GenerationManager): IList<IGenome>",
+											"text": "+Produce(totalRequired, GenerationManager): List<IGenome>",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -10690,9 +10630,6 @@
 											"visibility": "public",
 											"isStatic": false,
 											"isLeaf": false,
-											"type": {
-												"$ref": "AAAAAAFjXpt04B9+00M="
-											},
 											"isReadOnly": false,
 											"isOrdered": false,
 											"isUnique": false,
@@ -10710,9 +10647,6 @@
 											"visibility": "public",
 											"isStatic": false,
 											"isLeaf": false,
-											"type": {
-												"$ref": "AAAAAAFjXpvM/CB841o="
-											},
 											"isReadOnly": false,
 											"isOrdered": false,
 											"isUnique": false,
@@ -11162,26 +11096,6 @@
 							],
 							"documentation": "Reinsert from previous generations. Usually, the best N are reinserted in the next generation.\n",
 							"visibility": "public",
-							"attributes": [
-								{
-									"_type": "UMLAttribute",
-									"_id": "AAAAAAFjX2DHMLXqTgE=",
-									"_parent": {
-										"$ref": "AAAAAAFjXpzBoia1IqQ="
-									},
-									"name": "MutationManager",
-									"documentation": "In case a mutation is desired.\n",
-									"visibility": "public",
-									"isStatic": false,
-									"isLeaf": false,
-									"isReadOnly": false,
-									"isOrdered": false,
-									"isUnique": false,
-									"isDerived": false,
-									"aggregation": "none",
-									"isID": false
-								}
-							],
 							"isAbstract": false,
 							"isFinalSpecialization": false,
 							"isLeaf": false
@@ -11600,16 +11514,15 @@
 							"attributes": [
 								{
 									"_type": "UMLAttribute",
-									"_id": "AAAAAAFjY35BXZyhZbg=",
+									"_id": "AAAAAAFjZa1AUijOoV8=",
 									"_parent": {
 										"$ref": "AAAAAAFjY321HJf37tc="
 									},
-									"name": "DependentMutations",
-									"documentation": "Only one mutation will be executed, if it gets the chance.\n\nPairs of mutations and their chances\n",
+									"name": "DependentMutationsChance",
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "Dictionary<IMutation float>",
+									"type": "float",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -11619,35 +11532,15 @@
 								},
 								{
 									"_type": "UMLAttribute",
-									"_id": "AAAAAAFjY4I8zZ/Ut1s=",
+									"_id": "AAAAAAFjZa3ERy06QWo=",
 									"_parent": {
 										"$ref": "AAAAAAFjY321HJf37tc="
 									},
-									"name": "IndependentMutations",
-									"documentation": "A random chance is taken for each mutation.\n",
+									"name": "IndependentMutationsChance",
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "Dictionary<IMutation float>",
-									"isReadOnly": false,
-									"isOrdered": false,
-									"isUnique": false,
-									"isDerived": false,
-									"aggregation": "none",
-									"isID": false
-								},
-								{
-									"_type": "UMLAttribute",
-									"_id": "AAAAAAFjY4Vgq7NbCYM=",
-									"_parent": {
-										"$ref": "AAAAAAFjY321HJf37tc="
-									},
-									"name": "RequiredMutations",
-									"documentation": "This mutation is executed no matter the chance.",
-									"visibility": "public",
-									"isStatic": false,
-									"isLeaf": false,
-									"type": "List<IMutation>",
+									"type": "float",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -11754,11 +11647,10 @@
 											"_parent": {
 												"$ref": "AAAAAAFjY/hAenASQb4="
 											},
-											"name": "totalRequiredNb",
+											"name": "totalRequired",
 											"visibility": "public",
 											"isStatic": false,
 											"isLeaf": false,
-											"type": "",
 											"isReadOnly": false,
 											"isOrdered": false,
 											"isUnique": false,
@@ -11774,7 +11666,6 @@
 											"visibility": "public",
 											"isStatic": false,
 											"isLeaf": false,
-											"type": "",
 											"isReadOnly": false,
 											"isOrdered": false,
 											"isUnique": false,
@@ -11789,7 +11680,7 @@
 											"visibility": "public",
 											"isStatic": false,
 											"isLeaf": false,
-											"type": "IList<IGenome>",
+											"type": "List<IGenome>",
 											"isReadOnly": false,
 											"isOrdered": false,
 											"isUnique": false,
