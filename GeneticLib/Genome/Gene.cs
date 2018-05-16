@@ -4,11 +4,16 @@ namespace GeneticLib.Genome
 {
 	public struct Gene : IEquatable<Gene>
 	{
-		public object Value { get; private set; }
+		public ICloneable Value { get; private set; }
 
-		public Gene(object value)
+		public Gene(ICloneable value)
 		{
 			Value = value;
+		}
+
+		public Gene(Gene other)
+		{
+			Value = other.Value.Clone() as ICloneable;
 		}
 
 		public bool Equals(Gene other)

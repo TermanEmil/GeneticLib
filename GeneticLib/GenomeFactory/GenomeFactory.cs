@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using GeneticLib.Genome;
 using GeneticLib.GenomeFactory.GenomeProducer;
-using GeneticLib.Population.Generation;
+using GeneticLib.Generation;
 
 namespace GeneticLib.GenomeFactory
 {

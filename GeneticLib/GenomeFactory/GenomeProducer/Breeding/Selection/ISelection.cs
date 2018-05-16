@@ -1,14 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using GeneticLib.Genome;
+using GeneticLib.Generation;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Selection
 {
+	/// <summary>
+    /// Select parrents for crossover.
+    /// </summary>
 	public interface ISelection
 	{
-		IList<IGenome> Select(
+		void Prepare(
+			IGenerationManager generationManager,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession,
-		    int nbToSelect);
+		    int totalNbToSelect);
+
+		IList<IGenome> Select(int nbToSelect);
     }
 }

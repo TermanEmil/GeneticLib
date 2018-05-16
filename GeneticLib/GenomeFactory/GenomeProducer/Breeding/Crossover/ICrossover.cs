@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using GeneticLib.Generation;
 using GeneticLib.Genome;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 {
 	public interface ICrossover
 	{
-		int NbOfRequiredParents { get; }
+		int NbOfParents { get; }
 
-		IList<IGenome> Cross(
-			GenomeProductionSession thisSession,
-			GenomeProductionSession totalSession,
-			IReadOnlyCollection<IGenome> parents);
+		void Prepare(
+			IGenerationManager generationManager,
+            GenomeProductionSession thisSession,
+            GenomeProductionSession totalSession);
+
+		IList<IGenome> Cross(IReadOnlyCollection<IGenome> parents);
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GeneticLib.Genome;
-using GeneticLib.Population.Generation;
+using GeneticLib.Generation;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer
 {
