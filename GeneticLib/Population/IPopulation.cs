@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using GeneticLib.Genome;
-using GeneticLib.Generation;
+using GeneticLib.Generations;
 
 namespace GeneticLib.Population
 {
 	public interface IPopulation
     {
-		List<IGenome> Genomes { get; }
-
-		void CreateInitialGeneration();
+		Generation CurrentGeneration { get; set; }
     }
 }

@@ -8,15 +8,17 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 {
 	public class OnePointCrossover : CrossoverBase
     {
-		protected bool useBothChildren;
+		public override int NbOfChildren => useBothChildren ? 2 : 1;
 
-		public OnePointCrossover(bool useBothChildren) : base (2)
+		protected bool useBothChildren;
+		      
+		public OnePointCrossover(bool useBothChildren = false) : base (2)
         {
 			this.useBothChildren = useBothChildren;
         }
 
 		protected override IList<IGenome> PerformCross(
-            IReadOnlyCollection<IGenome> parents)
+			IList<IGenome> parents)
 		{
 			var parent1 = parents.ElementAt(0);
 			var parent2 = parents.ElementAt(1);

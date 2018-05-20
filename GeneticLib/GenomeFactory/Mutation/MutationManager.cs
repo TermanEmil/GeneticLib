@@ -35,6 +35,16 @@ namespace GeneticLib.GenomeFactory.Mutation
 		public IMutation mutation;
         public float chance;
 		public EMutationType mutationType;
+
+		public MutationEntry(
+			IMutation mutation,
+			float chance,
+			EMutationType mutationType)
+		{
+			this.mutation = mutation;
+			this.chance = chance;
+			this.mutationType = mutationType;
+		}
     }
 
 	/// <summary>

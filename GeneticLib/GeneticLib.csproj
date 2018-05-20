@@ -21,7 +21,7 @@
     <Folder Include="GenomeFactory\GenomeProducer\Breeding\Selection\" />
     <Folder Include="Randomness\" />
     <Folder Include="GeneticManager\" />
-    <Folder Include="Generation\" />
-    <Folder Include="Generation\InitialGeneration\" />
+    <Folder Include="Generations\" />
+    <Folder Include="Generations\InitialGeneration\" />
   </ItemGroup>
 </Project>

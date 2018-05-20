@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GeneticLib.Genome;
 
-namespace GeneticLib.Generation
+namespace GeneticLib.Generations
 {
 	/// <summary>
     /// Or GenerationStrategy.
@@ -13,6 +13,7 @@ namespace GeneticLib.Generation
 	public interface IGenerationManager
     {
 		List<Generation> Generations { get; }
+		Generation CurrentGeneration { get; }
 
 		void RegisterNewGeneration(Generation newGeneration);
     }

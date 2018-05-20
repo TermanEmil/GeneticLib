@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GeneticLib.Genome;
 
-namespace GeneticLib.Generation
+namespace GeneticLib.Generations
 {
     public class Generation
     {

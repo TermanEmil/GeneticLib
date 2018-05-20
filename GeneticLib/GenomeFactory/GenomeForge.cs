@@ -4,14 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 using GeneticLib.Genome;
 using GeneticLib.GenomeFactory.GenomeProducer;
-using GeneticLib.Generation;
+using GeneticLib.Generations;
 
 namespace GeneticLib.GenomeFactory
 {
 	/// <summary>
     /// Where the next generation's Genomes are produced.
     /// </summary>
-    public class GenomeFactory
+    public class GenomeForge
     {
 		public List<IGenomeProducer> Producers = new List<IGenomeProducer>();
 

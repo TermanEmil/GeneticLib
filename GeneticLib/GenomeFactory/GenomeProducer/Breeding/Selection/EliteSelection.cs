@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GeneticLib.Genome;
-using GeneticLib.Generation;
+using GeneticLib.Generations;
 using System.Linq;
 using System.Diagnostics;
 
@@ -23,8 +23,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Selection
 				totalSession,
 				totalNbToSelect);
 
-			var parents = generationManager.Generations
-										   .Last()
+			var parents = generationManager.CurrentGeneration
 										   .Genomes
 			                               .OrderByDescending(g => g.Fitness)
 										   .Take(totalNbToSelect);

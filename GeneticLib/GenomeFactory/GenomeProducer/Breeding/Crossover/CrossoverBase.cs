@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GeneticLib.Generation;
+using GeneticLib.Generations;
 using GeneticLib.Genome;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 {
 	public abstract class CrossoverBase : ICrossover
     {
-		public int NbOfParents { get; set; }
+		public int NbOfParents { get; }
+		public abstract int NbOfChildren { get; }
 
 		protected IGenerationManager generationManager;
         protected GenomeProductionSession thisSession;
@@ -29,31 +30,18 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
             this.totalSession = totalSession;
 		}
         
-		public IList<IGenome> Cross(IReadOnlyCollection<IGenome> parents)
+		public IList<IGenome> Cross(IList<IGenome> parents)
 		{
 			Trace.Assert(parents.Count == NbOfParents);
 
 			var children = PerformCross(parents);
 
-			RegisterParticipants(parents);
+			thisSession.RegisterParticipants(parents);
 			thisSession.CurrentlyProduced.AddRange(children);
 			return children;
 		}
 
 		protected abstract IList<IGenome> PerformCross(
-			IReadOnlyCollection<IGenome> parents);
-
-		private void RegisterParticipants(
-			IReadOnlyCollection<IGenome> participants)
-		{
-			var dict = thisSession.ParticipatedGenomes;
-			foreach (var participant in participants)
-			{
-				if (dict.ContainsKey(participant))
-					dict.Add(participant, 0);
-
-				dict[participant] += 1;
-			}
-		}
+			IList<IGenome> parents);
     }
 }

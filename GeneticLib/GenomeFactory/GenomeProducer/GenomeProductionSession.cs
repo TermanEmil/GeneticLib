@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GeneticLib.Genome;
-using GeneticLib.Generation;
+using GeneticLib.Generations;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer
 {
@@ -21,18 +21,23 @@ namespace GeneticLib.GenomeFactory.GenomeProducer
 			ParticipatedGenomes = new Dictionary<IGenome, int>();
         }
 
-		public void AddNewProducedGenomes(IEnumerable<IGenome> newGenomes)
+        /// <summary>
+        /// </summary>
+        /// <returns>Returns the added genomes.</returns>
+		public IEnumerable<IGenome> AddNewProducedGenomes(IEnumerable<IGenome> newGenomes)
 		{
 			var newGenomesCount = newGenomes.Count();
 			var thisGenomesCount = CurrentlyProduced.Count;
+			var genomesToTake = newGenomes;
 
 			if (newGenomesCount + thisGenomesCount > requiredNb)
 			{
 				var delta = newGenomesCount + thisGenomesCount - requiredNb;
-				newGenomes = newGenomes.Take(delta);
+				genomesToTake = newGenomes.Take(delta);
 			}
 
-			CurrentlyProduced.AddRange(newGenomes);
+			CurrentlyProduced.AddRange(genomesToTake);
+			return genomesToTake;
 		}
 
 		public void Merge(GenomeProductionSession other)
@@ -46,5 +51,17 @@ namespace GeneticLib.GenomeFactory.GenomeProducer
 					ParticipatedGenomes[pair.Key] += pair.Value;
 			}
 		}
+
+		public void RegisterParticipants(IEnumerable<IGenome> participants)
+        {
+            var dict = ParticipatedGenomes;
+            foreach (var participant in participants)
+            {
+                if (dict.ContainsKey(participant))
+                    dict.Add(participant, 0);
+
+                dict[participant] += 1;
+            }
+        }
     }
 }

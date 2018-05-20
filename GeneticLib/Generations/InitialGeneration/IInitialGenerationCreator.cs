@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using GeneticLib.Genome;
 
-namespace GeneticLib.Generation.InitialGeneration
+namespace GeneticLib.Generations.InitialGeneration
 {
 	public interface IInitialGenerationCreator
     {
-		List<IGenome> Create(int nbOfGenomes);
+		IList<IGenome> Create(int nbOfGenomes);
     }
 }
