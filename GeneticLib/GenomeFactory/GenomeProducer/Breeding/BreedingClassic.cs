@@ -12,9 +12,12 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 	public class BreedingClassic : BreedingBase
 	{
 		public BreedingClassic(
+			float productionPart,
+			int minProduction,
 			ISelection selection,
 			ICrossover crossover,
-			MutationManager mutationManager)
+			MutationManager mutationManager
+		) : base(productionPart, minProduction)
 		{
 			Selection = selection;
 			Crossover = crossover;

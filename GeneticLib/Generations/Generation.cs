@@ -6,7 +6,7 @@ namespace GeneticLib.Generations
 {
     public class Generation
     {
-		public IList<IGenome> Genomes { get; }
+		public IList<IGenome> Genomes { get; set; }
 		public DateTime CreationDate { get; }
 		public int Number { get; }
 

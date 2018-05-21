@@ -6,7 +6,7 @@ namespace GeneticLib.Generations
 	public abstract class GenerationManagerBase : IGenerationManager
     {
 		public List<Generation> Generations { get; }
-		public Generation CurrentGeneration { get; protected set; }
+		public Generation CurrentGeneration { get; set; }
 
 		protected GenerationManagerBase()
         {

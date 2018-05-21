@@ -13,7 +13,7 @@ namespace GeneticLib.Generations
 	public interface IGenerationManager
     {
 		List<Generation> Generations { get; }
-		Generation CurrentGeneration { get; }
+		Generation CurrentGeneration { get; set; }
 
 		void RegisterNewGeneration(Generation newGeneration);
     }

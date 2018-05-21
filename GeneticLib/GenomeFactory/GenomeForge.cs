@@ -12,8 +12,13 @@ namespace GeneticLib.GenomeFactory
     /// Where the next generation's Genomes are produced.
     /// </summary>
     public class GenomeForge
-    {
+    {      
 		public List<IGenomeProducer> Producers = new List<IGenomeProducer>();
+
+		public GenomeForge(List<IGenomeProducer> producers)
+		{
+			Producers = producers;
+		}
 
 		public List<IGenome> Produce(
 			int totalRequired,
@@ -49,11 +54,17 @@ namespace GeneticLib.GenomeFactory
 
 		protected int GetProducerNbOfGenomesToMake(
 			int totalRequired,
+            int available,
 			IGenomeProducer producer)
 		{
 			var result = (int)(producer.ProductionPart * totalRequired);
+
+			if (result < available)
+                result = available;
+			
 			if (result < producer.MinProduction)
 				result = producer.MinProduction;
+
 			return result;
 		}
 
@@ -64,6 +75,7 @@ namespace GeneticLib.GenomeFactory
 		{
 			var requiredNb = GetProducerNbOfGenomesToMake(
 				totalSession.requiredNb,
+				totalSession.requiredNb - totalSession.CurrentlyProduced.Count,
 				producer);
 			
             var thisSession = new GenomeProductionSession(requiredNb);

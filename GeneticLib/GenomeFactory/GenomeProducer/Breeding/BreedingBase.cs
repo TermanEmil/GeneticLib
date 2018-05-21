@@ -13,8 +13,17 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 		public ISelection Selection { get; set; }
 		public ICrossover Crossover { get; set; }
 		public MutationManager MutationManager { get; set; }
+
 		public float ProductionPart { get; set; }
 		public int MinProduction { get; set; }
+
+		protected BreedingBase(
+			float productionPart,
+		    int minProduction)
+		{
+			ProductionPart = productionPart;
+			MinProduction = minProduction;
+		}
 
 		public IList<IGenome> Produce(
 			IGenerationManager generationManager,

@@ -11,6 +11,14 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Reinsertion
 		public float ProductionPart { get; set; }
 		public int MinProduction { get; set; }
 
+		public EliteReinsertion(
+			float productionPart,
+		    int minProduction)
+		{
+			ProductionPart = productionPart;
+			MinProduction = minProduction;
+		}
+
 		public IList<IGenome> Produce(
 			IGenerationManager generationManager,
 			GenomeProductionSession thisSession,
