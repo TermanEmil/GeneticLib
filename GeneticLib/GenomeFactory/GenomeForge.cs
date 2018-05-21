@@ -33,21 +33,22 @@ namespace GeneticLib.GenomeFactory
 				var currentCount = totalSession.CurrentlyProduced.Count;
 				ExecuteProducer(generationManager, totalSession, Producers.Last());
 
-				if (currentCount <= totalSession.CurrentlyProduced.Count)
+				if (currentCount == totalSession.CurrentlyProduced.Count)
 				{
 					throw new Exception("The last producer MUST yield at least " +
 										"one genome");
 				}
 			}
 
-			Trace.Assert(totalSession.CurrentlyProduced.Count != totalRequired);
+			Trace.Assert(totalSession.CurrentlyProduced.Count == totalRequired);
 
 			return totalSession.CurrentlyProduced;
 		}
 
 		public void Validate()
 		{
-			if (Producers.Sum(x => x.ProductionPart) <= 0.999f)
+			var totalSum = Producers.Sum(x => x.ProductionPart);
+			if (Math.Abs(totalSum - 1) > 0.0001)
 				throw new Exception("The total sum of producers' production part" +
 				                    "must be 1");
 		}      
@@ -59,7 +60,7 @@ namespace GeneticLib.GenomeFactory
 		{
 			var result = (int)(producer.ProductionPart * totalRequired);
 
-			if (result < available)
+			if (result > available)
                 result = available;
 			
 			if (result < producer.MinProduction)

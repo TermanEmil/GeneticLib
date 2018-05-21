@@ -40,6 +40,7 @@ namespace GeneticLib.GeneticManager
 
 		public void Init()
 		{
+			this.GenomeForge.Validate();
 			Repopulate(0);
 		}      
 
@@ -70,7 +71,7 @@ namespace GeneticLib.GeneticManager
         
 		protected virtual void Repopulate(int generationNb)
 		{
-			this.OnRepopulate.Invoke(this, null);
+			this.OnRepopulate?.Invoke(this, null);
 
 			var genomes = this.InitialGenerationCreator
 			                  .Create(PopulationGenomeCount);

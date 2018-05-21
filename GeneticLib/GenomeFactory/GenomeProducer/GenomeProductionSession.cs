@@ -32,7 +32,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer
 
 			if (newGenomesCount + thisGenomesCount > requiredNb)
 			{
-				var delta = newGenomesCount + thisGenomesCount - requiredNb;
+				var delta = requiredNb - thisGenomesCount;
 				genomesToTake = newGenomes.Take(delta);
 			}
 
@@ -57,7 +57,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer
             var dict = ParticipatedGenomes;
             foreach (var participant in participants)
             {
-                if (dict.ContainsKey(participant))
+                if (!dict.ContainsKey(participant))
                     dict.Add(participant, 0);
 
                 dict[participant] += 1;
