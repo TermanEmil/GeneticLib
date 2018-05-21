@@ -6,7 +6,7 @@ namespace GeneticLib.Randomness
 {
 	public static class GARandomManager
     {
-		public static Random Random;
+		public static IRandom Random;
 
 		public static float NextFloat(float min = 0, float max = 1)
 		{
