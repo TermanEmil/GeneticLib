@@ -26,6 +26,10 @@
     <Folder Include="Utils\" />
     <Folder Include="Utils\Graph\" />
     <Folder Include="Genome\GeneticGene\" />
+    <Folder Include="NeuralStructures\" />
+    <Folder Include="Genome\GeneticGene\NeuralSynapse\" />
+    <Folder Include="NeuralStructures\Activators\" />
+    <Folder Include="NeuralStructures\NeuralCollector\" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
