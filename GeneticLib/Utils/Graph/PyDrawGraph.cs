@@ -31,9 +31,8 @@ namespace GeneticLib.Utils.Graph
 
 			var result = JsonConvert.SerializeObject(jsonObj);
 			result = result.Replace("\"", "\\\"")
-                           .Replace(" ", "")
-                           .Replace("\n", "");
-
+			               .Replace(" ", "")
+			               .Replace("\n", "");
 			RunPyGraph(result);
 		}
 
