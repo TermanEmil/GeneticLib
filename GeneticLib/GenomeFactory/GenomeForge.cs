@@ -13,14 +13,14 @@ namespace GeneticLib.GenomeFactory
     /// </summary>
     public class GenomeForge
     {      
-		public List<IGenomeProducer> Producers = new List<IGenomeProducer>();
+		public IList<IGenomeProducer> Producers = new List<IGenomeProducer>();
 
-		public GenomeForge(List<IGenomeProducer> producers)
+		public GenomeForge(IList<IGenomeProducer> producers)
 		{
 			Producers = producers;
 		}
 
-		public List<IGenome> Produce(
+		public IList<IGenome> Produce(
 			int totalRequired,
 			IGenerationManager generationManager)
 		{

@@ -23,5 +23,7 @@
     <Folder Include="GeneticManager\" />
     <Folder Include="Generations\" />
     <Folder Include="Generations\InitialGeneration\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Utils\Graph\" />
   </ItemGroup>
 </Project>
