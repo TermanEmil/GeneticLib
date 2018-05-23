@@ -25,6 +25,7 @@
     <Folder Include="Generations\InitialGeneration\" />
     <Folder Include="Utils\" />
     <Folder Include="Utils\Graph\" />
+    <Folder Include="Genome\GeneticGene\" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

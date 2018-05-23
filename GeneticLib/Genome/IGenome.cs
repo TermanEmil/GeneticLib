@@ -1,4 +1,5 @@
 ﻿using System;
+using GeneticLib.Genome.GeneticGene;
 
 namespace GeneticLib.Genome
 {
