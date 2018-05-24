@@ -2,15 +2,19 @@
 using System.Linq;
 using GeneticLib.Genome;
 using GeneticLib.Randomness;
+using GeneticLib.Utils.Extensions;
 
 namespace GeneticLib.GenomeFactory.Mutation.NeuralMutations
 {
-	public class AllSynapseWeightMutation : NeuralMutationBase
+	/// <summary>
+    /// Mutate the synapses' weights with a given probability.
+    /// </summary>
+	public class AllSynapsesWeightMutation : NeuralMutationBase
     {
 		public Func<float> DeltaWeight { get; set; }
 		public float SynapseMutationChance { get; set; }
 
-		public AllSynapseWeightMutation(
+		public AllSynapsesWeightMutation(
 			Func<float> deltaWeight,
 			float synapseMutationChance)
         {
@@ -20,9 +24,15 @@ namespace GeneticLib.GenomeFactory.Mutation.NeuralMutations
 
 		protected override void DoMutation(NeuralGenome genome)
 		{
+			var rnd = GARandomManager.Random;         
+			var deltaWeight = DeltaWeight();
+
 			genome.NeuralGenes
-				  .Where(ng => GARandomManager.Random.NextDouble() <= SynapseMutationChance)
-			      .All(x => x.Synapse.Weight = 0);
+				  .Where(ng => rnd.NextDouble() <= SynapseMutationChance)
+				  .Apply(x =>
+    						 x.Synapse.Weight +=
+    						 (float)rnd.NextDouble(-deltaWeight, deltaWeight)
+						);
 		}
 	}
 }

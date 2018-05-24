@@ -1,6 +1,6 @@
 ﻿using System;
 using GeneticLib.NeuralStructures;
-using GeneticLib.Utils.Math;
+using GeneticLib.Utils;
 
 namespace GeneticLib.Genome.GeneticGene.NeuralSynapse
 {
@@ -10,7 +10,7 @@ namespace GeneticLib.Genome.GeneticGene.NeuralSynapse
 		public float Weight
 		{
 			get => weight;
-			set => value.Clamp(WeightConstraints.Item1, WeightConstraints.Item2);
+			set => weight = value.Clamp(WeightConstraints.Item1, WeightConstraints.Item2);
 		}
 
 		public Tuple<float, float> WeightConstraints =

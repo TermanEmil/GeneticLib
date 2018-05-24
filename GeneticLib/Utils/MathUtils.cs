@@ -1,5 +1,5 @@
 ﻿using System;
-namespace GeneticLib.Utils.Math
+namespace GeneticLib.Utils
 {
 	public static class MathUtils
     {

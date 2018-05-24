@@ -32,7 +32,7 @@
     <Folder Include="NeuralStructures\NeuralCollector\" />
     <Folder Include="GenomeFactory\Mutation\NeuralMutations\" />
     <Folder Include="Utils\Extensions\" />
-    <Folder Include="Utils\Math\" />
+    <Folder Include="Utils\NeuralUtils\" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

@@ -41,7 +41,6 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 			return children;
 		}
 
-		protected abstract IList<IGenome> PerformCross(
-			IList<IGenome> parents);
+		protected abstract IList<IGenome> PerformCross(IList<IGenome> parents);
     }
 }

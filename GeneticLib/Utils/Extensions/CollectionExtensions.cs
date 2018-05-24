@@ -15,5 +15,14 @@ namespace GeneticLib.Utils.Extensions
             var rnd = GARandomManager.Random;
             return source.ElementAt(rnd.Next(0, source.Count()));
         }
+
+		public static IEnumerable<T> Apply<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            foreach (var e in source)
+            {
+                action(e);
+                yield return e;
+            }
+        }
     }
 }

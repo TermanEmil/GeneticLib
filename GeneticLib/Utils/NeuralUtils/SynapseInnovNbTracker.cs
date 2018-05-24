@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GeneticLib.NeuralStructures;
 
-namespace GeneticLib.Genome.GeneticGene.NeuralSynapse
+namespace GeneticLib.Utils.NeuralUtils
 {
 	public class SynapseInnovNbTracker
 	{
