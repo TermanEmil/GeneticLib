@@ -7,5 +7,10 @@ namespace GeneticLib.NeuralStructures.Activators
 		{
 			return (float)(1 / (1 + Math.Exp(-number)));
 		}
+
+		public object Clone()
+		{
+			return new SigmoidActivation();
+		}
 	}
 }

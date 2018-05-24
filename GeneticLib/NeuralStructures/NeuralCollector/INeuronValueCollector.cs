@@ -7,7 +7,7 @@ namespace GeneticLib.NeuralStructures.NeuralCollector
 	/// Usually, the sum is made, but I offer the option to at least multiply
 	/// them.
     /// </summary>
-	public interface INeuronValueCollector
+	public interface INeuronValueCollector : ICloneable
     {
 		float InitialValue { get; }
 

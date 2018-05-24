@@ -7,5 +7,10 @@ namespace GeneticLib.NeuralStructures.Activators
 		{
 			return Math.Abs(number) < float.Epsilon ? 1 : (float)(Math.Sin(number) / number);
 		}
+
+		public object Clone()
+		{
+			return new SincActivation();
+		}
 	}
 }

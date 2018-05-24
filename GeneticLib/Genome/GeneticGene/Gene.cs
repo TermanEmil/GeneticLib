@@ -2,9 +2,9 @@
 
 namespace GeneticLib.Genome.GeneticGene
 {
-	public struct Gene : IEquatable<Gene>
+	public class Gene : IEquatable<Gene>
 	{
-		public ICloneable Value { get; private set; }
+		public ICloneable Value { get; protected set; }
 
 		public Gene(ICloneable value)
 		{
@@ -38,16 +38,6 @@ namespace GeneticLib.Genome.GeneticGene
 		public override string ToString()
 		{
 			return Value == null ? String.Empty : "G: " + Value.ToString();
-		}
-
-		public static bool operator ==(Gene first, Gene second)
-		{
-			return first.Equals(second);
-		}
-
-		public static bool operator !=(Gene first, Gene second)
-		{
-			return !(first == second);
 		}
 	}
 }

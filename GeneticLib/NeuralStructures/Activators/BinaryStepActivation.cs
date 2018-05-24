@@ -7,5 +7,10 @@ namespace GeneticLib.NeuralStructures.Activators
 		{
 			return number < 0 ? 0 : 1;
 		}
+
+		public object Clone()
+		{
+			return new BinaryStepActivation();
+		}
 	}
 }

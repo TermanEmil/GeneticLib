@@ -30,6 +30,9 @@
     <Folder Include="Genome\GeneticGene\NeuralSynapse\" />
     <Folder Include="NeuralStructures\Activators\" />
     <Folder Include="NeuralStructures\NeuralCollector\" />
+    <Folder Include="GenomeFactory\Mutation\NeuralMutations\" />
+    <Folder Include="Utils\Extensions\" />
+    <Folder Include="Utils\Math\" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

@@ -1,8 +1,8 @@
 ﻿using System;
 namespace GeneticLib.NeuralStructures.Activators
 {
-	public interface IActivation
+	public interface IActivation : ICloneable
     {
-		float Activate(float number);
+		float Activate(float number);      
     }
 }

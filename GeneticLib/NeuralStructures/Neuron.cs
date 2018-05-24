@@ -3,10 +3,10 @@ using GeneticLib.NeuralStructures.Activators;
 using GeneticLib.NeuralStructures.NeuralCollector;
 
 namespace GeneticLib.NeuralStructures
-{
-	public class Neuron
+{   
+	public class Neuron : IEquatable<Neuron>
     {
-		public float Value { get; set; }
+		public virtual float Value { get; set; }
 		public int InnovationNb { get; }
 
 		public INeuronValueCollector ValueCollector { get; set; }
@@ -18,5 +18,17 @@ namespace GeneticLib.NeuralStructures
 			this.Activation = activation;
 			ValueCollector = new SumValueCollector();
 		}
-    }
+
+		public Neuron(Neuron other)
+		{
+			InnovationNb = other.InnovationNb;
+			Activation = Activator.CreateInstance(other.Activation.GetType()) as IActivation;
+			ValueCollector = Activator.CreateInstance(other.ValueCollector.GetType()) as INeuronValueCollector;
+		}
+
+		public bool Equals(Neuron other)
+		{
+			return this.InnovationNb == other.InnovationNb;
+		}
+	}
 }

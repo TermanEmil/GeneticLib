@@ -7,5 +7,10 @@ namespace GeneticLib.NeuralStructures.Activators
 		{
 			return (float)Math.Log(number + Math.Exp(number));
 		}
+
+		public object Clone()
+		{
+			return new SoftPlusActivation();
+		}
 	}
 }

@@ -7,5 +7,10 @@ namespace GeneticLib.NeuralStructures.Activators
 		{
 			return (float)Math.Sin(number);
 		}
+
+		public object Clone()
+		{
+			return new SinusoidActivation();
+		}
 	}
 }

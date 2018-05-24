@@ -7,5 +7,10 @@ namespace GeneticLib.NeuralStructures.Activators
 		{
 			return (float)Math.Tanh(number);
 		}
+
+		public object Clone()
+		{
+			return new TanHActivation();
+		}
 	}
 }

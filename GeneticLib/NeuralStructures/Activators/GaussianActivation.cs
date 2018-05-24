@@ -7,5 +7,10 @@ namespace GeneticLib.NeuralStructures.Activators
 		{
 			return (float)Math.Exp(-number * number);
 		}
+
+		public object Clone()
+		{
+			return new GaussianActivation();
+		}
 	}
 }
