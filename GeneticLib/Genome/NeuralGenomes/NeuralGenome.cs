@@ -21,35 +21,31 @@ namespace GeneticLib.Genome.NeuralGenomes
 			new RecursiveNetworkOpBaker();
   
 		public NeuralGenome(
-			Dictionary<InnovationNumber, Neuron> neurons,
+			IEnumerable<Neuron> neurons,
 			NeuralGene[] connections)
 			: this(neurons, connections, new RecursiveNetworkOpBaker())
 		{
 		}
 
 		public NeuralGenome(
-			Dictionary<InnovationNumber, Neuron> neurons,
+			IEnumerable<Neuron> neurons,
 			NeuralGene[] connections,
 			INetworkOperationBaker networkOperationBaker)
 		{
 			NetworkOperationBaker = networkOperationBaker;
 
-			Neurons = neurons;
-			Inputs = neurons.Values
-			                   .Where(x =>
-			                          typeof(InputNeuron).IsAssignableFrom(x.GetType()))
-			                   .ToArray();
+			Neurons = neurons.ToDictionary(x => x.InnovationNb, x => x);
+			Inputs = neurons.Where(x =>
+			                       typeof(InputNeuron).IsAssignableFrom(x.GetType()))
+			                .ToArray();
 			
-			Outputs = neurons.Values
-			                    .Where(x =>
-			                           typeof(OutputNeuron).IsAssignableFrom(x.GetType()))
-			                    .ToArray();
+			Outputs = neurons.Where(x =>
+			                        typeof(OutputNeuron).IsAssignableFrom(x.GetType()))
+			                 .ToArray();
 
-			Biasses = neurons.Values
-							 .Where(x =>
+			Biasses = neurons.Where(x =>
 			                        typeof(BiasNeuron).IsAssignableFrom(x.GetType()))
-							 .ToArray();
-            
+			                 .ToArray();
 			
 			Genes = connections;
 		}
@@ -78,13 +74,9 @@ namespace GeneticLib.Genome.NeuralGenomes
         }
 
 		public override IGenome CreateNew(Gene[] genes)
-		{
-			var newNeurons = Neurons.ToDictionary(
-				kv => kv.Key,
-				kv => kv.Value.Clone());
-
+		{         
 			var result = new NeuralGenome(
-				newNeurons,
+				Neurons.Select(x => x.Value.Clone()).ToArray(),
 				genes.Select(x => new NeuralGene(x)).ToArray())
 			{
 				NetworkOperationBaker = this.NetworkOperationBaker.Clone()

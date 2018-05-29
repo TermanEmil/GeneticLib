@@ -78,13 +78,22 @@ namespace GeneticLib.Utils.Graph
 			msg = String.Format("{0, -7}", data.Length) + msg;
 			data = Encoding.ASCII.GetBytes(msg);
 
-			targetSocket.BeginSend(
-                data,
-                0,
-                data.Length,
-                SocketFlags.None,
-				new AsyncCallback(SendDataCallback),
-				targetSocket);
+			try
+			{
+				targetSocket.BeginSend(
+					data,
+					0,
+					data.Length,
+					SocketFlags.None,
+					new AsyncCallback(SendDataCallback),
+					targetSocket);
+			}
+			catch (SocketException)
+			{
+				clientSocket.Shutdown(SocketShutdown.Both);
+				clientSocket.Close();
+				clientSocket = null;
+			}
 		}
 
 		private void SendDataCallback(IAsyncResult asyncResult)

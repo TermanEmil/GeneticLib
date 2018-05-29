@@ -24,5 +24,12 @@ namespace GeneticLib.Utils.Extensions
                 yield return e;
             }
         }
+
+		public static T Pop<T>(this IEnumerator<T> source)
+		{
+			source.MoveNext();
+			var result = source.Current;         
+			return result;
+		}
     }
 }

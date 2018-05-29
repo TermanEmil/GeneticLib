@@ -2,6 +2,7 @@
 using GeneticLib.Population;
 using GeneticLib.Generations;
 using GeneticLib.Generations.InitialGeneration;
+using GeneticLib.Genome;
 
 namespace GeneticLib.GeneticManager
 {

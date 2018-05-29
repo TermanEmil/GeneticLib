@@ -16,11 +16,23 @@ def clamp(t, min_v, max_v):
 
 def inverse_lerp(min_v, max_v, value):
 	value = clamp(value, min_v, max_v)
-	return (value - float(min_v)) / (max_v - min_v)
+
+	step = abs(max_v) + abs(min_v) + abs(value)
+	min_v += step
+	value += step
+	max_v += step
+
+	result = (value - min_v) / (max_v - min_v)
+	return result
 
 def lerp(min_v, max_v, t):
-	return min_v + t * (max_v - min_v)
+	step = abs(max_v) + abs(min_v) 
+	min_v += step
+	max_v += step
 
+	result = min_v + t * (max_v - min_v)
+	return result - step
+	
 
 class NeuralNetDrawer:
 	def __init__(self):
@@ -41,7 +53,7 @@ class NeuralNetDrawer:
 			val = lerp(pn[0], pn[1], gradient)
 			result.append(val)
 
-		alpha = max(inverse_lerp(0.0, max_w, abs(weigth)), 0.4)
+		alpha = max(inverse_lerp(0.0, max_w, abs(weigth)), 0.2)
 		result.append(alpha)
 		return result
 
