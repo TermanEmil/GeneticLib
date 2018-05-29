@@ -44,10 +44,10 @@ namespace GeneticLib.Utils.NeuralUtils
 		{         
 			var jsonObj = new
 			{
-				neuronRadius,
-				maxWeight,
-				edgeWidth,
-				printNeuronText,
+				neuron_radius = neuronRadius,
+				max_weight = maxWeight,
+				edge_width = edgeWidth,
+				print_neurons_txt = printNeuronText,
 				neurons = GetNeuronsJsonObjs(target),
 				edges = GetJsonEdges(target)
 			};

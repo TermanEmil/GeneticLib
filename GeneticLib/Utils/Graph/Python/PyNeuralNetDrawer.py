@@ -88,9 +88,18 @@ class NeuralNetDrawer:
 			deltaX = n2['x'] - n1['x']
 			deltaY = n2['y'] - n1['y']
 			arrow = plt.arrow(
-				n1['x'] + deltaX / 2, n1['y'] + deltaY / 2,
+				n1['x'] + deltaX / 5, n1['y'] + deltaY / 5,
 				deltaX / 1000000, deltaY / 1000000,
-				head_width=0.02
+				head_width=0.02,
+			)
+			arrow.set_color(self.get_edge_color(edge['w']))
+			arrow.set_linewidth(self.data['edge_width'])
+			self.ax.add_artist(arrow)
+
+			arrow = plt.arrow(
+				n1['x'] + deltaX * 0.8, n1['y'] + deltaY * 0.8,
+				deltaX / 1000000, deltaY / 1000000,
+				head_width=0.017,
 			)
 			arrow.set_color(self.get_edge_color(edge['w']))
 			arrow.set_linewidth(self.data['edge_width'])

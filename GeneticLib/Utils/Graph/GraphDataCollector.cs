@@ -23,7 +23,9 @@ namespace GeneticLib.Utils.Graph
 				points.Add(new Vector2(iteration, value));
 		}
 
-		public void Draw(string graphTitle, string graphStyle = "b-")
+		public void Draw(
+			string graphTitle = "",
+			string graphStyle = "b-")
 		{
 			PyDrawGraph.DrawGraph(points, graphTitle, graphStyle);
 		}
