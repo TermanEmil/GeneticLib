@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 
 namespace GeneticLib.Utils.Graph
 {
+	/// <summary>
+    /// A helper which draws simpel graphs in python.
+    /// </summary>
 	public static class PyDrawGraph
     {
 		static readonly string drawGraphPyFile =
@@ -30,9 +33,7 @@ namespace GeneticLib.Utils.Graph
 			};
 
 			var result = JsonConvert.SerializeObject(jsonObj);
-			result = result.Replace("\"", "\\\"")
-			               .Replace(" ", "")
-			               .Replace("\n", "");
+			result = result.Replace("\"", "\\\"");
 			RunPyGraph(result);
 		}
 

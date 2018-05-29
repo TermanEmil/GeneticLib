@@ -32,6 +32,10 @@ namespace GeneticLib.Utils.NeuralUtils
 		public static float yPadding = 0.05f;
 		public static float distBetweenNodes = 0.03f;
 
+        // When a random position is chosen, if it's too close to other nodes,
+        // then it tries again to find a random position.
+		public static int randomPosTries = 3;
+
 		private static Dictionary<InnovationNumber, Vector2> NeuronPos =
 			new Dictionary<InnovationNumber, Vector2>();
 
@@ -90,7 +94,7 @@ namespace GeneticLib.Utils.NeuralUtils
 						x = pos.X,
 						y = pos.Y,
 						innov = n.InnovationNb,
-						color = new[] { 1f, 0.721f, 1f },
+						color = new[] { 0.627f, 0.160f, 1f },
 						label = "B"
 					};
 				}
@@ -130,13 +134,8 @@ namespace GeneticLib.Utils.NeuralUtils
 											  !target.Outputs.Contains(n) &&
 											  !target.Biasses.Contains(n))
 									   .ToArray();
-
-			var positions = new List<Vector2>();
-			positions.AddRange(inputNeurons.Select(n => new Vector2(n.x, n.y)));
-			positions.AddRange(outputNeurons.Select(n => new Vector2(n.x, n.y)));
-
+            
 			//  Compute the positions
-			var remainingNodesPos = new List<Vector2>();
 			foreach (var node in remainingNodes)
 			{
 				Vector2 pos;
@@ -145,18 +144,15 @@ namespace GeneticLib.Utils.NeuralUtils
 					pos = NeuronPos[node.InnovationNb];
                 else
                 {
-                    pos = GetRandomPos(positions);
+					pos = GetRandomPos(randomPosTries);
 					NeuronPos.Add(node.InnovationNb, pos);
                 }
-
-                positions.Add(pos);
-                remainingNodesPos.Add(pos);
 			}
 
-			var remainingNeurons = remainingNodes.Zip(remainingNodesPos, (n, pos) => new JsonNeuron
+			var remainingNeurons = remainingNodes.Select(n => new JsonNeuron
 			{
-				x = pos.X,
-				y = pos.Y,
+				x = NeuronPos[n.InnovationNb].X,
+				y = NeuronPos[n.InnovationNb].Y,
 				innov = n.InnovationNb,
 			}).ToArray();
 
@@ -180,9 +176,7 @@ namespace GeneticLib.Utils.NeuralUtils
 			return pos;
 		}
 
-		private static Vector2 GetRandomPos(
-			IEnumerable<Vector2> currentPositions,
-			int tries = 3)
+		private static Vector2 GetRandomPos(int tries = 3)
 		{
 			var result = new Vector2(0, 0);
 
@@ -196,8 +190,8 @@ namespace GeneticLib.Utils.NeuralUtils
 					yPadding + distBetweenNodes,
 						  1f - (yPadding + distBetweenNodes));
 
-				var n = currentPositions.Count(pos =>
-											   Vector2.Distance(pos, result) < distBetweenNodes);
+				var n = NeuronPos.Values.Count(pos =>
+				                               Vector2.Distance(pos, result) < distBetweenNodes);
 				if (n == 0)
 					break;
 			}

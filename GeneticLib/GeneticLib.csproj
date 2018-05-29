@@ -8,6 +8,7 @@
     <Compile Remove="Class1.cs" />
     <Compile Remove="GenomeFactory\GenomeProducer\Breeding\BreedingSession.cs" />
     <Compile Remove="GAManager\GAManager.cs" />
+    <Compile Remove="Generations\InitialGeneration\NeuralInitialGenerationCreator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Genome\" />

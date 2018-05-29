@@ -13,24 +13,21 @@ using Newtonsoft.Json;
 
 namespace GeneticLib.Utils.Graph
 {
+	/// <summary>
+    /// A server socket which has only one client.
+	/// I use it to communicate with my python programs.
+    /// </summary>
     public class SocketProxy
     {      
-		private static readonly string pyFilePath =
-			"../GeneticLib/GeneticLib/Utils/Graph/Python/PyNeuralNetDrawer.py";
-
 		public bool Verbose { get; set; }
 
 		private Socket serverSocket;
 		private Socket clientSocket = null;
-		private IPEndPoint socketEndpoint;      
+		public IPEndPoint socketEndpoint;      
 
 		public SocketProxy(bool verbose = true)
         {
-			Verbose = verbose;
-			                  
-			SetupServer();
-			StartPyProg();
-			StartListening();         
+			Verbose = verbose;       
         }
 
 		public bool SendStrMsg(string msg)
@@ -42,7 +39,7 @@ namespace GeneticLib.Utils.Graph
 			return true;
 		}
 
-		private void SetupServer()
+		public void SetupServer()
 		{
 			LogMsg(() => Console.WriteLine("Setting up the server..."));         
 
@@ -57,7 +54,7 @@ namespace GeneticLib.Utils.Graph
 			LogMsg(() => Console.WriteLine("Server set up."));
 		}
 
-		private void StartListening()
+		public void StartListening()
 		{
 			LogMsg(() => Console.WriteLine("Starting listening"));
 			while (clientSocket == null)
@@ -104,44 +101,10 @@ namespace GeneticLib.Utils.Graph
             }         
         }
 
-		private void StartPyProg()
-		{
-			LogMsg(() => Console.WriteLine("Starting py progr..."));
-			using (var p = new Process())
-            {
-                var info = new ProcessStartInfo("python3")
-                {
-                    Arguments = pyFilePath + " " + CreatePyProgJSONSettings(),
-                    RedirectStandardInput = false,
-                    RedirectStandardError = false,
-                    RedirectStandardOutput = false,
-                    UseShellExecute = false
-                };
-
-                p.StartInfo = info;
-                p.Start();
-            }
-			LogMsg(() => Console.WriteLine("Py prog started."));
-		}
-
-		#region Helpers
-		private string CreatePyProgJSONSettings()
-		{
-			var jsonArgv = new
-			{
-				connection_link = socketEndpoint.Address.ToString(),
-				connection_port = socketEndpoint.Port.ToString(),
-				verbose = Verbose
-			};
-
-			var result = JsonConvert.SerializeObject(jsonArgv);
-			result = result.Replace("\"", "\\\"")
-						   .Replace(" ", "")
-						   .Replace("\n", "");
-
-			return result;
-		}
-
+		#region Helpers    
+        /// <summary>
+        /// Very stupid... but working solution...
+        /// </summary>
 		private void TryToConnectUntilAValidPortIsFound()
 		{
 			for (int port = 2000; port < 3000; port++)
