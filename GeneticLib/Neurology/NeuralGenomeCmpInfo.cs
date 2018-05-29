@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using GeneticLib.Genome;
-using GeneticLib.Genome.GeneticGene;
+using GeneticLib.Genome.Genes;
+using GeneticLib.Genome.NeuralGenomes;
 
-namespace GeneticLib.Utils.NeuralUtils
+namespace GeneticLib.Neurology
 {
 	/// <summary>
 	/// Contains the information about the difference of the two genomes.

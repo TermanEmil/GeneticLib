@@ -1,13 +1,14 @@
 ﻿using System;
+using GeneticLib.Utils;
 
-namespace GeneticLib.NeuralStructures.NeuralCollector
+namespace GeneticLib.Neurology.Neurons.NeuralCollector
 {
 	/// <summary>
     /// Defines how the values are combined.
 	/// Usually, the sum is made, but I offer the option to at least multiply
 	/// them.
     /// </summary>
-	public interface INeuronValueCollector : ICloneable
+	public interface INeuronValueCollector : IDeepClonable<INeuronValueCollector>
     {
 		float InitialValue { get; }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using GeneticLib.Genome;
+using GeneticLib.Genome.NeuralGenomes;
 using GeneticLib.Randomness;
 using GeneticLib.Utils.Extensions;
 
@@ -27,12 +28,10 @@ namespace GeneticLib.GenomeFactory.Mutation.NeuralMutations
 			var rnd = GARandomManager.Random;         
 			var deltaWeight = DeltaWeight();
 
-			genome.NeuralGenes
-				  .Where(ng => rnd.NextDouble() <= SynapseMutationChance)
-				  .Apply(x =>
-    						 x.Synapse.Weight +=
-    						 (float)rnd.NextDouble(-deltaWeight, deltaWeight)
-						);
+			var targets = genome.NeuralGenes
+								.Where(ng => rnd.NextDouble() <= SynapseMutationChance);
+			foreach (var ng in targets)
+				ng.Synapse.Weight += (float)rnd.NextDouble(-deltaWeight, deltaWeight);
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
-using GeneticLib.Genome.GeneticGene;
+using GeneticLib.Genome.Genes;
+using GeneticLib.Utils;
 
 namespace GeneticLib.Genome
 {
@@ -8,18 +9,7 @@ namespace GeneticLib.Genome
     {
 		public Gene[] Genes { get; set; }
 		public float Fitness { get; set; }
-
-		public virtual object Clone()
-		{
-			var result = new GenomeBase
-            {
-                Fitness = this.Fitness,
-                Genes = this.Genes
-                            .Select(g => new Gene(g))
-                            .ToArray()
-            };
-            return result;
-		}
+        
 
 		public virtual IGenome CreateNew(Gene[] genes)
 		{
@@ -29,6 +19,11 @@ namespace GeneticLib.Genome
                              .ToArray()
             };
             return result;
+		}
+
+		public virtual IGenome Clone()
+		{
+			return CreateNew(this.Genes);
 		}
 	}
 }

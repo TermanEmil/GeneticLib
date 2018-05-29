@@ -1,5 +1,6 @@
 ﻿using System;
 using GeneticLib.Genome;
+using GeneticLib.Genome.NeuralGenomes;
 using GeneticLib.Randomness;
 using GeneticLib.Utils.Extensions;
 

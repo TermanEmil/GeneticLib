@@ -1,19 +1,20 @@
 ﻿using System;
+using GeneticLib.Utils;
 
-namespace GeneticLib.Genome.GeneticGene
+namespace GeneticLib.Genome.Genes
 {
 	public class Gene : IEquatable<Gene>
 	{
-		public ICloneable Value { get; protected set; }
+		public IDeepClonable<object> Value { get; protected set; }
 
-		public Gene(ICloneable value)
+		public Gene(IDeepClonable<object> value)
 		{
 			Value = value;
 		}
 
 		public Gene(Gene other)
 		{
-			Value = other.Value.Clone() as ICloneable;
+			Value = other.Value.Clone() as IDeepClonable<object>;
 		}
 
 		public bool Equals(Gene other)

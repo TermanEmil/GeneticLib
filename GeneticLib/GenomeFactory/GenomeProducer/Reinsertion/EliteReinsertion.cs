@@ -28,7 +28,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Reinsertion
 												.Genomes
 												.OrderByDescending(g => g.Fitness)
 												.Take(thisSession.requiredNb);
-			var producedGenomes = participants.Select(g => g.Clone() as IGenome);
+			var producedGenomes = participants.Select(g => g.CreateNew(g.Genes) as IGenome);
 
 			thisSession.RegisterParticipants(participants);
 			thisSession.AddNewProducedGenomes(producedGenomes);

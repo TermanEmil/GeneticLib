@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GeneticLib.NeuralStructures;
+using GeneticLib.Neurology;
+using GeneticLib.Neurology.Neurons;
 
-namespace GeneticLib.Utils.NeuralUtils
+namespace GeneticLib.Neurology
 {
 	public class SynapseInnovNbTracker
 	{

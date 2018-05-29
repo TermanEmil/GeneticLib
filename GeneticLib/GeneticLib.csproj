@@ -25,13 +25,16 @@
     <Folder Include="Generations\InitialGeneration\" />
     <Folder Include="Utils\" />
     <Folder Include="Utils\Graph\" />
-    <Folder Include="Genome\GeneticGene\" />
-    <Folder Include="NeuralStructures\" />
-    <Folder Include="Genome\GeneticGene\NeuralSynapse\" />
-    <Folder Include="NeuralStructures\Activators\" />
-    <Folder Include="NeuralStructures\NeuralCollector\" />
+    <Folder Include="Genome\Genes\" />
+    <Folder Include="Neurology\" />
     <Folder Include="GenomeFactory\Mutation\NeuralMutations\" />
     <Folder Include="Utils\Extensions\" />
+    <Folder Include="Genome\NeuralGenomes\" />
+    <Folder Include="Genome\NeuralGenomes\NetworkOperationBakers\" />
+    <Folder Include="Neurology\Neurons\" />
+    <Folder Include="Neurology\Neurons\NeuralCollector\" />
+    <Folder Include="Neurology\Synapses\" />
+    <Folder Include="Utils\Graph\Python\" />
     <Folder Include="Utils\NeuralUtils\" />
   </ItemGroup>
   <ItemGroup>

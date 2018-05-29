@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GeneticLib.Genome;
-using GeneticLib.Genome.GeneticGene;
+using GeneticLib.Genome.Genes;
 using GeneticLib.Randomness;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
@@ -61,7 +61,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 			var fromFirst = genes1.Take(pivot);
 			var fromSecond = genes2.Skip(pivot)
 			                       .Take(nbOfGenes - pivot);
-
+            
 			return fromFirst.Concat(fromSecond);
 		}
     }

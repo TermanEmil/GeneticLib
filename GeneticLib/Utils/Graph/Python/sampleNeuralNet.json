@@ -1,0 +1,50 @@
+{
+	"neuron_radius": 0.03,
+	"max_weight": 5,
+	"edge_width": 3,
+	"print_neurons_txt": true,
+	"neurons": [
+		{
+			"x": 0.1,
+			"y": 0.1,
+			"innov": 1,
+			"color": [0.3, 0.3, 0.3]
+		},
+		{
+			"x": 0.1,
+			"y": 0.2,
+			"innov": 2,
+			"color": [0.3, 0.3, 0.3]
+		},
+
+		{
+			"x": 0.2,
+			"y": 0.15,
+			"innov": 3
+		},
+
+		{
+			"x": 0.3,
+			"y": 0.15,
+			"innov": 4,
+			"label": "B"
+		}
+	],
+	"edges": [
+		{
+			"start": 1,
+			"end": 3,
+			"w": 5
+		},
+		{
+			"start": 2,
+			"end": 3,
+			"w": -3
+		},
+		{
+			"start": 3,
+			"end": 4,
+			"w": 2
+		}
+	]
+}

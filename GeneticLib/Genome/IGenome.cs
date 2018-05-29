@@ -1,9 +1,10 @@
 ﻿using System;
-using GeneticLib.Genome.GeneticGene;
+using GeneticLib.Genome.Genes;
+using GeneticLib.Utils;
 
 namespace GeneticLib.Genome
 {
-	public interface IGenome : ICloneable
+	public interface IGenome : IDeepClonable<IGenome>
     {
 		Gene[] Genes { get; set; }
 		float Fitness { get; set; }

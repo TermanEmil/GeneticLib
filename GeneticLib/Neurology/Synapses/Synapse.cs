@@ -1,10 +1,11 @@
 ﻿using System;
-using GeneticLib.NeuralStructures;
+using GeneticLib.Neurology;
+using GeneticLib.Neurology.Neurons;
 using GeneticLib.Utils;
 
-namespace GeneticLib.Genome.GeneticGene.NeuralSynapse
+namespace GeneticLib.Neurology.Synapses
 {
-	public class Synapse : ICloneable
+	public class Synapse : IDeepClonable<Synapse>
     {
 		private float weight;
 		public float Weight
@@ -17,15 +18,15 @@ namespace GeneticLib.Genome.GeneticGene.NeuralSynapse
 			new Tuple<float, float>(float.MinValue, float.MaxValue);
 
 		public int InnovationNb { get; }
-		public Neuron Incoming { get; }
-		public Neuron Outgoing { get; }
+		public InnovationNumber Incoming { get; }
+		public InnovationNumber Outgoing { get; }
 		public bool Enabled { get; set; } = true;
         
 		public Synapse(
 			int innovNb,
 			float weight,
-			Neuron incomingNeuron,
-			Neuron outgoingNeuron)
+			InnovationNumber incomingNeuron,
+			InnovationNumber outgoingNeuron)
 		{
 			Incoming = incomingNeuron;
 			Outgoing = outgoingNeuron;
@@ -44,7 +45,7 @@ namespace GeneticLib.Genome.GeneticGene.NeuralSynapse
 			InnovationNb = other.InnovationNb;
 		}
 
-		public object Clone()
+		public Synapse Clone()
 		{
 			return new Synapse(this);
 		}

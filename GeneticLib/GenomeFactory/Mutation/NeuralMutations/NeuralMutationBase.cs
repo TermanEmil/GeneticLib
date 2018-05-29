@@ -1,5 +1,6 @@
 ﻿using System;
 using GeneticLib.Genome;
+using GeneticLib.Genome.NeuralGenomes;
 
 namespace GeneticLib.GenomeFactory.Mutation.NeuralMutations
 {

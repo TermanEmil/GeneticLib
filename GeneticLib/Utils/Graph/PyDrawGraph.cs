@@ -11,7 +11,7 @@ namespace GeneticLib.Utils.Graph
 	public static class PyDrawGraph
     {
 		static readonly string drawGraphPyFile =
-			"../GeneticLib/GeneticLib/Utils/Graph/DrawGraph.py";
+			"../GeneticLib/GeneticLib/Utils/Graph/Python/DrawGraph.py";
 
 		public static void DrawGraph(
 			IEnumerable<Vector2> points,

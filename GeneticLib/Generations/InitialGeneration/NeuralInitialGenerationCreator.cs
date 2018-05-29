@@ -1,24 +1,24 @@
 ﻿using System;
 using GeneticLib.Genome;
-using GeneticLib.Utils.NeuralUtils;
+using GeneticLib.Neurology;
 
 namespace GeneticLib.Generations.InitialGeneration
 {
+	/// <summary>
+    /// Left it for now.
+	/// I decided to come back here after I try to resolve some problems.
+    /// </summary>
 	public class NeuralInitialGenerationCreator : InitialGenerationCreatorBase
     {
 		private SynapseInnovNbTracker synapseInnovNbTracker;
 
-        public NeuralInitialGenerationCreator(
-		    int nbOfInputs,
-		    int nbOfOutputs)
+        public NeuralInitialGenerationCreator()
         {
 			synapseInnovNbTracker = new SynapseInnovNbTracker();
         }
 
 		protected override IGenome NewRandomGenome()
-		{
-			var result = new NeuralGenome();
-
+		{         
 			throw new NotImplementedException();
 		}
 	}
