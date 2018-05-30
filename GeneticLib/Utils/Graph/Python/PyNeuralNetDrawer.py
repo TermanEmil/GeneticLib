@@ -36,7 +36,7 @@ def lerp(min_v, max_v, t):
 
 class NeuralNetDrawer:
 	def __init__(self):
-		self.fig = plt.figure(figsize=(7, 7))
+		self.fig = plt.figure(num=1, figsize=(7, 7))
 		self.ax = self.fig.gca()
 		self.ax.axis('off')
 
@@ -183,4 +183,3 @@ live_drawing = animation.FuncAnimation(
 	fargs=[drawer, socket_proxy])
 
 plt.show()
-

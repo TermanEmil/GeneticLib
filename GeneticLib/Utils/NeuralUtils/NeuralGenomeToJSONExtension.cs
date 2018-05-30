@@ -123,7 +123,7 @@ namespace GeneticLib.Utils.NeuralUtils
 					label = "O"
 				};
 
-				y += yPadding;
+				y += deltaY;
 				return result;
 			}).ToArray();
 
