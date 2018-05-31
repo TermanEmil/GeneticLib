@@ -11,9 +11,9 @@ namespace GeneticLib.Utils.Graph
 	/// <summary>
     /// A helper which draws simpel graphs in python.
     /// </summary>
-	public static class PyDrawGraph
+	public class PyDrawGraph
     {
-		static readonly string drawGraphPyFile =
+		public static string pyGraphDrawerFilePath =
 			"../GeneticLib/GeneticLib/Utils/Graph/Python/DrawGraph.py";
 
 		public static void DrawGraph(
@@ -42,7 +42,7 @@ namespace GeneticLib.Utils.Graph
 			using (var p = new Process())
 			{
 				var info = new ProcessStartInfo("python3");
-				info.Arguments = drawGraphPyFile + " " + args;
+				info.Arguments = pyGraphDrawerFilePath + " " + args;
 				info.RedirectStandardInput = false;
 				info.RedirectStandardError = false;
 				info.RedirectStandardOutput = false;

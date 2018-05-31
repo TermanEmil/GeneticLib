@@ -4,13 +4,15 @@ using Newtonsoft.Json;
 
 namespace GeneticLib.Utils.Graph
 {
+	/// <summary>
+	/// Most likely, you'd need to modify the py file path.
+    /// </summary>
     public class NeuralNetDrawer
     {
-		private static readonly string pyFilePath =
-            "../GeneticLib/GeneticLib/Utils/Graph/Python/PyNeuralNetDrawer.py";
-
 		private readonly SocketProxy socketProxy;
-
+		public static string pyGraphDrawerPath = 
+			"../GeneticLib/GeneticLib/Utils/Graph/Python/PyNeuralNetDrawer.py";
+                  
 		public NeuralNetDrawer(bool verbose = false)
 		{
 			socketProxy = new SocketProxy(verbose);
@@ -31,7 +33,7 @@ namespace GeneticLib.Utils.Graph
             {
                 var info = new ProcessStartInfo("python3")
                 {
-                    Arguments = pyFilePath + " " + CreatePyProgJSONSettings(),
+					Arguments = pyGraphDrawerPath + " " + CreatePyProgJSONSettings(),
                     RedirectStandardInput = false,
                     RedirectStandardError = false,
                     RedirectStandardOutput = false,
