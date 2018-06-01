@@ -14,5 +14,10 @@ namespace GeneticLib.Neurology
         {
 			return Math.Exp(-number * number);
         }
+
+		public static double TanH(double number)
+		{
+			return Math.Tanh(number);
+		}
     }
 }
