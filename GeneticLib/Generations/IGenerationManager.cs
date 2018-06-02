@@ -12,9 +12,16 @@ namespace GeneticLib.Generations
     /// </summary>
 	public interface IGenerationManager
     {
-		List<Generation> Generations { get; }
 		Generation CurrentGeneration { get; set; }
 
 		void RegisterNewGeneration(Generation newGeneration);
+
+        /// <summary>
+        /// Get genomes for production or other things.
+		/// The genomes are selected acording to a tactic. For example, it
+		/// may be desired to remember the best genome ever.
+		/// But usually, the it returns the current generation of genomes.
+        /// </summary>
+		IEnumerable<IGenome> GetGenomes();
     }
 }

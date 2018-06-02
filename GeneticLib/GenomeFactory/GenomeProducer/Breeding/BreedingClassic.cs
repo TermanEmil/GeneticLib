@@ -4,7 +4,7 @@ using System.Linq;
 using GeneticLib.Generations;
 using GeneticLib.Genome;
 using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover;
-using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Selection;
+using GeneticLib.GenomeFactory.GenomeProducer.Selection;
 using GeneticLib.GenomeFactory.Mutation;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
@@ -25,7 +25,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 		}
 
 		protected override IList<IGenome> DoProduction(
-			IGenerationManager generationManager,
+			IEnumerable<IGenome> sampleGenomes,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession)
 		{
@@ -33,19 +33,19 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 			var totalNbToSelct = selections * Crossover.NbOfParents;
 
 			Selection.Prepare(
-				generationManager,
+				sampleGenomes,
 				thisSession,
 				totalSession,
 				totalNbToSelect: totalNbToSelct);
 			
 			Crossover.Prepare(
-				generationManager,
+				sampleGenomes,
 				thisSession,
 				totalSession);
 
 			while (thisSession.CurrentlyProduced.Count < thisSession.requiredNb)
 			{
-				var parents = Selection.Select(Crossover.NbOfParents);
+				var parents = Selection.Select(Crossover.NbOfParents).ToArray();
 				var children = Crossover.Cross(parents);
                 
 				var usedChildren = thisSession.AddNewProducedGenomes(children);

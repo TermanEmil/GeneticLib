@@ -11,7 +11,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 		int NbOfChildren { get; }
 
 		void Prepare(
-			IGenerationManager generationManager,
+			IEnumerable<IGenome> sampleGenomes,
             GenomeProductionSession thisSession,
             GenomeProductionSession totalSession);
 

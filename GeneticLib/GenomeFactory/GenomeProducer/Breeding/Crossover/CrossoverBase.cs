@@ -11,7 +11,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 		public int NbOfParents { get; }
 		public abstract int NbOfChildren { get; }
 
-		protected IGenerationManager generationManager;
+		protected IEnumerable<IGenome> sampleGenomes;
         protected GenomeProductionSession thisSession;
         protected GenomeProductionSession totalSession;
 
@@ -21,11 +21,11 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 		}
 
 		public virtual void Prepare(
-            IGenerationManager generationManager,
+			IEnumerable<IGenome> sampleGenomes,
             GenomeProductionSession thisSession,
             GenomeProductionSession totalSession)
 		{
-			this.generationManager = generationManager;
+			this.sampleGenomes = sampleGenomes;
             this.thisSession = thisSession;
             this.totalSession = totalSession;
 		}

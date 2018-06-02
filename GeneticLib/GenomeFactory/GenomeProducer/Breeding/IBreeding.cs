@@ -1,6 +1,6 @@
 ﻿using System;
 using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover;
-using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Selection;
+using GeneticLib.GenomeFactory.GenomeProducer.Selection;
 using GeneticLib.GenomeFactory.Mutation;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding

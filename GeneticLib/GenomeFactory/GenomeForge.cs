@@ -81,7 +81,7 @@ namespace GeneticLib.GenomeFactory
 			
             var thisSession = new GenomeProductionSession(requiredNb);
             producer.Produce(
-                generationManager,
+				generationManager.GetGenomes().ToArray(),
                 thisSession,
                 totalSession
             );

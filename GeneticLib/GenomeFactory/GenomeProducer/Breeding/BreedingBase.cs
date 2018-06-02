@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using GeneticLib.Generations;
 using GeneticLib.Genome;
 using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover;
-using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Selection;
+using GeneticLib.GenomeFactory.GenomeProducer.Selection;
 using GeneticLib.GenomeFactory.Mutation;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
@@ -26,15 +26,15 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 		}
 
 		public IList<IGenome> Produce(
-			IGenerationManager generationManager,
+			IEnumerable<IGenome> sampleGenomes,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession)
 		{
-			return DoProduction(generationManager, thisSession, totalSession);
+			return DoProduction(sampleGenomes, thisSession, totalSession);
 		}
 
 		protected abstract IList<IGenome> DoProduction(
-			IGenerationManager generationManager,
+			IEnumerable<IGenome> sampleGenomes,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession);
 	}
