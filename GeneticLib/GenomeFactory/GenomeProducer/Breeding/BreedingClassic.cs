@@ -25,7 +25,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 		}
 
 		protected override IList<IGenome> DoProduction(
-			IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession)
 		{
@@ -51,7 +51,8 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 				var usedChildren = thisSession.AddNewProducedGenomes(children);
 
 				foreach (var child in usedChildren)
-                    this.MutationManager.ApplyMutations(child);            
+                    this.MutationManager.ApplyMutations(child);
+				
 			}
 
 			return thisSession.CurrentlyProduced;

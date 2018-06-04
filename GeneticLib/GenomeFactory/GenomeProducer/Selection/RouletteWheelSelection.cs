@@ -5,6 +5,7 @@ using System.Linq;
 using GeneticLib.Generations;
 using GeneticLib.Genome;
 using GeneticLib.Randomness;
+using MoreLinq;
 
 // -20, 30, 40, -10
 // 50
@@ -17,7 +18,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 		protected Queue<IGenome> allParents;
 
         public override void Prepare(
-			IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
             GenomeProductionSession thisSession,
             GenomeProductionSession totalSession,
             int totalNbToSelect)
@@ -29,40 +30,38 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
                 totalNbToSelect);
 
 			var candidates = sampleGenomes.ToList();
-			var positiveFitnSum = 0f;
-			var negativeFitnSum = 0f;
-			foreach (var candidate in candidates)
-				if (candidate.Fitness > 0)
-					positiveFitnSum += candidate.Fitness;
-				else
-					negativeFitnSum += candidate.Fitness;
+
+			var minFitness = candidates.Min(x => x.Fitness);
+			if (minFitness < 0)
+				minFitness *= -1;
+			else
+				minFitness = 0;
+
+			var genomAndFitn = candidates.ToDictionary(x => x, x => x.Fitness + minFitness);
+			var fitnessSum = genomAndFitn.Values.Sum();
 
 			allParents = new Queue<IGenome>(totalNbToSelect);
 			for (int i = 0; i < totalNbToSelect; i++)
 			{
-				var targetFitness = GARandomManager.NextFloat(negativeFitnSum, positiveFitnSum);
+				var targetFitness = GARandomManager.NextFloat(0, fitnessSum);
 				IGenome target = null;
 
-				foreach (var genome in candidates)
+				foreach (var pair in genomAndFitn)
 				{
-					if (targetFitness <= genome.Fitness)
+					if (targetFitness <= pair.Value)
 					{
-						target = genome;
+						target = pair.Key;
 						break;
 					}
 					else
-						targetFitness -= genome.Fitness;
+						targetFitness -= pair.Value;
 				}
 
 				Debug.Assert(target != null);
 
 				allParents.Enqueue(target);
-				candidates.Remove(target);
-
-				if (target.Fitness > 0)
-					positiveFitnSum -= target.Fitness;
-				else
-					negativeFitnSum -= target.Fitness;
+				fitnessSum -= genomAndFitn[target];
+				genomAndFitn.Remove(target);            
 			}
         }
 

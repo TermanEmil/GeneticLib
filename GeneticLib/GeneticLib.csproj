@@ -34,7 +34,6 @@
     <Folder Include="Neurology\Neurons\" />
     <Folder Include="Neurology\Neurons\NeuralCollector\" />
     <Folder Include="Neurology\Synapses\" />
-    <Folder Include="Utils\Graph\Python\" />
     <Folder Include="Utils\NeuralUtils\" />
     <Folder Include="GenomeFactory\GenomeProducer\Selection\" />
   </ItemGroup>

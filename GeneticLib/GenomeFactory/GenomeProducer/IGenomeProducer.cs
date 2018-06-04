@@ -20,7 +20,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer
 		int MinProduction { get; set; }
         
 		IList<IGenome> Produce(
-			IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession);
     }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using GeneticLib.Generations;
 using GeneticLib.Genome;
 using GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover;
 using GeneticLib.GenomeFactory.GenomeProducer.Selection;
 using GeneticLib.GenomeFactory.Mutation;
+using GeneticLib.Utils.Extensions;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 {
@@ -26,15 +28,17 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding
 		}
 
 		public IList<IGenome> Produce(
-			IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession)
 		{
-			return DoProduction(sampleGenomes, thisSession, totalSession);
+			var result = DoProduction(sampleGenomes, thisSession, totalSession);
+			Trace.Assert(result.EveryoneIsUnique());
+			return result;
 		}
 
 		protected abstract IList<IGenome> DoProduction(
-			IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession);
 	}

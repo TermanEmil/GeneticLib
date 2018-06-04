@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using GeneticLib.Generations;
 using GeneticLib.Genome;
+using GeneticLib.Utils.Extensions;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 {
@@ -35,9 +36,9 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 			Trace.Assert(parents.Count == NbOfParents);
 
 			var children = PerformCross(parents);
+			Trace.Assert(children.EveryoneIsUnique());
 
 			thisSession.RegisterParticipants(parents);
-			thisSession.CurrentlyProduced.AddRange(children);
 			return children;
 		}
 

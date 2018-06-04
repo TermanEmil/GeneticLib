@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using GeneticLib.Genome;
 using GeneticLib.GenomeFactory.GenomeProducer.Selection;
+using GeneticLib.Utils.Extensions;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Reinsertion
 {
@@ -26,7 +28,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Reinsertion
         }
 
 		public IList<IGenome> Produce(
-            IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
             GenomeProductionSession thisSession,
             GenomeProductionSession totalSession)
         {
@@ -36,15 +38,16 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Reinsertion
                 totalSession,
                 thisSession.requiredNb);
 
-			var participants = selection.Select(thisSession.requiredNb)
-			                            .ToArray();
-            var produced = participants.Select(x => x.Clone())
+			var participants = selection.Select(thisSession.requiredNb);			
+			var produced = participants.Select(x => x.CreateNew(x.Genes))
 			                           .ToArray();
+
+			Trace.Assert(produced.EveryoneIsUnique());
 
             thisSession.RegisterParticipants(participants);
             thisSession.AddNewProducedGenomes(produced);
 
-            return produced;
+			return produced;
         }
     }
 }

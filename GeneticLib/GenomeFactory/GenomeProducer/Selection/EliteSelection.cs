@@ -12,7 +12,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 		protected Queue<IGenome> allParents;
 
 		public override void Prepare(
-			IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
             GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession,
             int totalNbToSelect)
@@ -26,18 +26,18 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 			if (sampleGenomes.Count() < totalNbToSelect)
 			{
 				var msg = string.Format("Not enough samples: {0} available {1} are asked",
-				                        allParents.Count, totalNbToSelect);
+				                        sampleGenomes.Count(), totalNbToSelect);
 				throw new Exception(msg);
 			}
 
 			var parents = sampleGenomes.OrderByDescending(g => g.Fitness)
 			                           .Take(totalNbToSelect);
-			allParents = new Queue<IGenome>(parents.ToArray());
+			allParents = new Queue<IGenome>(parents);
 		}
 
 		protected override IEnumerable<IGenome> PerformSelection(int nbToSelect)
 		{
-			if (allParents.Count < nbToSelect)
+ 			if (allParents.Count < nbToSelect)
 			{
 				throw new Exception(
 					string.Format("Not enough samples: {0} available {1} are asked",

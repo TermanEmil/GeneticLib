@@ -18,8 +18,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 			this.useBothChildren = useBothChildren;
         }
 
-		protected override IList<IGenome> PerformCross(
-			IList<IGenome> parents)
+		protected override IList<IGenome> PerformCross(IList<IGenome> parents)
 		{
 			var parent1 = parents.ElementAt(0);
 			var parent2 = parents.ElementAt(1);
@@ -42,7 +41,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 
 			if (useBothChildren)
 			{
-				children[1] = parent1.CreateNew(CreateGenes(
+				children[1] = parent2.CreateNew(CreateGenes(
 					parent2.Genes,
 					parent1.Genes,
 					pivot,
@@ -53,8 +52,8 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Breeding.Crossover
 		}
 
 		private IEnumerable<Gene> CreateGenes(
-			IEnumerable<Gene> genes1,
-			IEnumerable<Gene> genes2,
+			IList<Gene> genes1,
+			IList<Gene> genes2,
 			int pivot,
 		    int nbOfGenes)
 		{

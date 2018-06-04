@@ -15,7 +15,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
         /// Before selection.
         /// </summary>
 		void Prepare(
-			IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
 			GenomeProductionSession thisSession,
 			GenomeProductionSession totalSession,
 		    int totalNbToSelect);

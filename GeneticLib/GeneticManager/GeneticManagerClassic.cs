@@ -53,6 +53,7 @@ namespace GeneticLib.GeneticManager
 
 			if (newGenerationGenomes.Count == 0)
 			{
+				OnRepopulate?.Invoke(this, null);
 				Repopulate(GenerationNumber + 1);
 				return;
 			}

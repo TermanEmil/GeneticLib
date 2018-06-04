@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using GeneticLib.Genome;
+using GeneticLib.Utils.Extensions;
 
 namespace GeneticLib.Generations
 {
@@ -14,6 +17,8 @@ namespace GeneticLib.Generations
 
 		public virtual void RegisterNewGeneration(Generation newGeneration)
         {
+			Trace.Assert(newGeneration.Genomes.EveryoneIsUnique());
+
 			DoGenrationRegistration(newGeneration);
 			CurrentGeneration = newGeneration;
         }

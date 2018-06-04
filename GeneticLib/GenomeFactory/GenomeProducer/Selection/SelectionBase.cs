@@ -15,7 +15,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 		protected int totalNbToSelect;
         
 		public virtual void Prepare(
-			IEnumerable<IGenome> sampleGenomes,
+			IList<IGenome> sampleGenomes,
             GenomeProductionSession thisSession,
             GenomeProductionSession totalSession,
 			int totalNbToSelect)
@@ -28,7 +28,7 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 
 		public IEnumerable<IGenome> Select(int nbToSelect)
 		{
-			var result = PerformSelection(nbToSelect);
+			var result = PerformSelection(nbToSelect).ToArray();
 			Trace.Assert(result.Count() == nbToSelect);
 			return result;
 		}

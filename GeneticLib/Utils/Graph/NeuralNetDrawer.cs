@@ -9,9 +9,10 @@ namespace GeneticLib.Utils.Graph
     /// </summary>
     public class NeuralNetDrawer
     {
-		private readonly SocketProxy socketProxy;
-		public static string pyGraphDrawerPath = 
-			"../GeneticLib/GeneticLib/Utils/Graph/Python/PyNeuralNetDrawer.py";
+		public static string pyGraphDrawerPath =
+            "../GeneticLib/GeneticLib/Utils/Graph/Python/PyNeuralNetDrawer.py";
+		
+		private readonly SocketProxy socketProxy;      
                   
 		public NeuralNetDrawer(bool verbose = false)
 		{

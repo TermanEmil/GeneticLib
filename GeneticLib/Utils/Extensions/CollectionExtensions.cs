@@ -31,5 +31,10 @@ namespace GeneticLib.Utils.Extensions
 			var result = source.Current;         
 			return result;
 		}
+
+		public static bool EveryoneIsUnique<T>(this IEnumerable<T> source)
+		{
+			return source.Distinct().Count() == source.Count();
+		}
     }
 }
