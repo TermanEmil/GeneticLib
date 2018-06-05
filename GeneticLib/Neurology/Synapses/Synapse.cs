@@ -4,7 +4,7 @@ using GeneticLib.Neurology.Neurons;
 using GeneticLib.Utils;
 
 namespace GeneticLib.Neurology.Synapses
-{
+{   
 	public class Synapse : IDeepClonable<Synapse>
     {
 		private float weight;

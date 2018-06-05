@@ -6,7 +6,7 @@ namespace GeneticLib.Neurology.Neurons.NeuralCollector
 	/// <summary>
     /// Defines how the values are combined.
 	/// Usually, the sum is made, but I offer the option to at least multiply
-	/// them.
+	/// the values.
     /// </summary>
 	public interface INeuronValueCollector : IDeepClonable<INeuronValueCollector>
     {

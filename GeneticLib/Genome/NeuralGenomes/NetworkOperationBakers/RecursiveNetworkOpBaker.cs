@@ -84,6 +84,11 @@ namespace GeneticLib.Genome.NeuralGenomes.NetworkOperationBakers
 				};
 			}
 
+			if (target.ValueModifiers != null)
+				foreach (var valueModifier in target.ValueModifiers)
+					yield return () =>
+						target.Value = (float)valueModifier(target.Value);
+
 			yield return () =>
 				target.Value = (float)target.Activation(target.Value);
 		}      

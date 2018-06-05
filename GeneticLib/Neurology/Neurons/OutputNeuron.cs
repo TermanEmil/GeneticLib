@@ -16,5 +16,12 @@ namespace GeneticLib.Neurology.Neurons
 				ValueCollector = this.ValueCollector.Clone()            
 			};
 		}
+
+		public override Neuron Clone(InnovationNumber otherInnov)
+        {
+			var clone = this.Clone();
+			clone.InnovationNb = otherInnov;
+			return clone;
+        }
 	}
 }

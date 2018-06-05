@@ -3,7 +3,7 @@ namespace GeneticLib.Neurology
 {
 	public struct InnovationNumber
     {
-		private int value;
+		public int value;
 
 		public static implicit operator InnovationNumber(int val)
 		{

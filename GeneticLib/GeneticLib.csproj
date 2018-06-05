@@ -36,6 +36,8 @@
     <Folder Include="Neurology\Synapses\" />
     <Folder Include="Utils\NeuralUtils\" />
     <Folder Include="GenomeFactory\GenomeProducer\Selection\" />
+    <Folder Include="Neurology\NeuralModels\" />
+    <Folder Include="Neurology\NeuronValueModifiers\" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

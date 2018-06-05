@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace GeneticLib.Neurology
 {
 	public delegate double ActivationFunction(double number);
