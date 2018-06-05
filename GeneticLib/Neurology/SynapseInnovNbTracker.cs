@@ -13,9 +13,8 @@ namespace GeneticLib.Neurology
 		/// represents the incoming and outgoing neurons' innov nb. The value
 		/// is the synapse innov nb.
         /// </summary>
-		public Dictionary<
-		    Tuple<InnovationNumber, InnovationNumber>,
-		    InnovationNumber> HystoricalMarkings { get; } =
+		public Dictionary<Tuple<InnovationNumber, InnovationNumber>, InnovationNumber>
+	        HystoricalMarkings { get; } =
 			    new Dictionary<Tuple<InnovationNumber, InnovationNumber>, InnovationNumber>();      
 
 		public int GetHystoricalMark(Neuron incoming, Neuron outgoing)
@@ -39,11 +38,11 @@ namespace GeneticLib.Neurology
             else
             {
                 var innovNb = 0;
-
+    
                 if (HystoricalMarkings.Any())
-                    innovNb = HystoricalMarkings.Max(x => x.Value) + 1;
+					innovNb = HystoricalMarkings.Values.Max(x => x.value) + 1;
 
-                HystoricalMarkings.Add(key, innovNb);
+                HystoricalMarkings.Add(key, innovNb);   
                 return innovNb;
             }
 		}

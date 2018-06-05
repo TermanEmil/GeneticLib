@@ -115,7 +115,7 @@ namespace GeneticLib.Neurology.NeuralModels
 			var prevLayer = layers.First();
 			foreach (var layer in layers.Skip(1))
 			{
-				ConnectNeurons(prevLayer, layer, weightInitializer);
+				ConnectNeurons(prevLayer, layer, weightInitializer).ToArray();
 				prevLayer = layer;
 			}
 		}
@@ -127,7 +127,7 @@ namespace GeneticLib.Neurology.NeuralModels
 		{         
 			var biasLayer = new[] { bias };
 			foreach (var layer in layers)
-				ConnectNeurons(biasLayer, layer, weightInitializer);
+				ConnectNeurons(biasLayer, layer, weightInitializer).ToArray();
 		}
 
 		protected InnovationNumber GetFreeNeuronInnovNb()
