@@ -15,6 +15,7 @@ namespace GeneticLib.Utils.Graph
     {
 		public static string pyGraphDrawerFilePath =
 			"../GeneticLib/GeneticLib/Utils/Graph/Python/DrawGraph.py";
+		public static string pyAssemblyCmd = "python3";
 
 		public static void DrawGraph(
 			IEnumerable<Vector2> points,
@@ -41,7 +42,7 @@ namespace GeneticLib.Utils.Graph
 		{
 			using (var p = new Process())
 			{
-				var info = new ProcessStartInfo("python3");
+				var info = new ProcessStartInfo("pyAssemblyCmd");
 				info.Arguments = pyGraphDrawerFilePath + " " + args;
 				info.RedirectStandardInput = false;
 				info.RedirectStandardError = false;

@@ -11,7 +11,8 @@ namespace GeneticLib.Utils.Graph
     {
 		public static string pyGraphDrawerPath =
             "../GeneticLib/GeneticLib/Utils/Graph/Python/PyNeuralNetDrawer.py";
-		
+		public static string pyAssemblyCmd = "python3";
+
 		private readonly SocketProxy socketProxy;      
                   
 		public NeuralNetDrawer(bool verbose = false)
@@ -32,7 +33,7 @@ namespace GeneticLib.Utils.Graph
         {
             using (var p = new Process())
             {
-                var info = new ProcessStartInfo("python3")
+				var info = new ProcessStartInfo(pyAssemblyCmd)
                 {
 					Arguments = pyGraphDrawerPath + " " + CreatePyProgJSONSettings(),
                     RedirectStandardInput = false,
