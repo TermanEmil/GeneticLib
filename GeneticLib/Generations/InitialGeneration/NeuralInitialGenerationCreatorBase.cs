@@ -14,22 +14,31 @@ namespace GeneticLib.Generations.InitialGeneration
 {
 	public class NeuralInitialGenerationCreatorBase : InitialGenerationCreatorBase
     {
-		private readonly NeuralGenome neuralGenomeSample;
+		private readonly INeuralModel neuralModel;
+		private readonly INetworkOperationBaker networkOperationBaker;
 
 		public NeuralInitialGenerationCreatorBase(
 			INeuralModel neuralModel,
 			INetworkOperationBaker networkOperationBaker)
 		{
-			neuralGenomeSample = new NeuralGenome(
-				neuralModel.Neurons.Values,
-				neuralModel.Synapses.Keys.Select(x => new NeuralGene(x)).ToArray(),
-				networkOperationBaker
-			);
+			this.neuralModel = neuralModel;
+			this.networkOperationBaker = networkOperationBaker;
 		}
         
 		protected override IGenome NewRandomGenome()
 		{
-			return neuralGenomeSample.Clone();
+			var synapses = neuralModel.Synapses
+                                      .Select(kv =>
+                                              new Synapse(kv.Key)
+                                              {
+                                                  Weight = (float)kv.Value()
+                                              });
+
+			return new NeuralGenome(
+                neuralModel.Neurons.Values,
+                synapses.Select(x => new NeuralGene(x)).ToArray(),
+				networkOperationBaker.Clone()
+            );
 		}
 	}
 }

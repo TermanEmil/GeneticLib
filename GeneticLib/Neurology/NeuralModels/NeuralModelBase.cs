@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GeneticLib.Neurology.Neurons;
 using GeneticLib.Neurology.Synapses;
+using GeneticLib.Randomness;
 
 namespace GeneticLib.Neurology.NeuralModels
 {
@@ -16,16 +17,16 @@ namespace GeneticLib.Neurology.NeuralModels
 		public Tuple<float, float> WeightConstraints =
 			new Tuple<float, float>(float.MinValue, float.MaxValue);
 
-		protected WeightInitializer defaultWeightInitializer;
+		public WeightInitializer defaultWeightInitializer;
 
-		public NeuralModelBase(WeightInitializer defaultWeightInitializer)
+		public NeuralModelBase()
         {
 			synapseInnovNbTracker = new SynapseInnovNbTracker();
 
 			Neurons = new Dictionary<InnovationNumber, Neuron>();
 			Synapses = new Dictionary<Synapse, WeightInitializer>();
 
-			this.defaultWeightInitializer = defaultWeightInitializer;
+			this.defaultWeightInitializer = () => GARandomManager.NextFloat(-1f, 1f);
         }
               
 		public Synapse AddConnection(
