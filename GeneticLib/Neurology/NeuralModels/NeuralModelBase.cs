@@ -32,7 +32,7 @@ namespace GeneticLib.Neurology.NeuralModels
 		public Synapse AddConnection(
 			InnovationNumber startNeuron,
 			InnovationNumber endNeuron,
-			WeightInitializer weightInitializer)
+			WeightInitializer weightInitializer = null)
 		{
 			if (!Neurons.ContainsKey(startNeuron) || !Neurons.ContainsKey(endNeuron))
                 throw new Exception("The given neurons are not yer registered.");
@@ -42,7 +42,9 @@ namespace GeneticLib.Neurology.NeuralModels
 			{
 				WeightConstraints = this.WeightConstraints
 			};
-            
+
+			if (weightInitializer == null)
+				weightInitializer = defaultWeightInitializer;
 			Synapses.Add(result, weightInitializer);
             
 			return result;
