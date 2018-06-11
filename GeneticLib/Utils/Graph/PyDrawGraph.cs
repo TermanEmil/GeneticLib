@@ -42,7 +42,7 @@ namespace GeneticLib.Utils.Graph
 		{
 			using (var p = new Process())
 			{
-				var info = new ProcessStartInfo("pyAssemblyCmd");
+				var info = new ProcessStartInfo(pyAssemblyCmd);
 				info.Arguments = pyGraphDrawerFilePath + " " + args;
 				info.RedirectStandardInput = false;
 				info.RedirectStandardError = false;
