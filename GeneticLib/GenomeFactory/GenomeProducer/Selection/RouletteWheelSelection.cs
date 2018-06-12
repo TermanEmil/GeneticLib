@@ -9,9 +9,19 @@ using MoreLinq;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 {
-	public class RouletteWheelSelection : SelectionBase
+	public class RouletteWheelSelection : RouletteWheelBase
     {
 		protected Queue<IGenome> allParents;
+
+		public RouletteWheelSelection(float participantsPart = 1f)
+            : base(participantsPart)
+        {
+        }
+
+		public RouletteWheelSelection(int participantsCount)
+            : base(participantsCount)
+        {
+        }
 
         public override void Prepare(
 			IList<IGenome> sampleGenomes,
@@ -25,7 +35,8 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
                 totalSession,
                 totalNbToSelect);
 
-			var candidates = sampleGenomes.ToList();
+			var samplesCount = ComputeParticipantsCount(sampleGenomes.Count());
+            var candidates = sampleGenomes.Take(samplesCount).ToList();
 
 			var minFitness = candidates.Min(x => x.Fitness);
 			if (minFitness < 0)

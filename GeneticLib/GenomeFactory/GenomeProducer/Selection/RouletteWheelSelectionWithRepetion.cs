@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using GeneticLib.Genome;
 using GeneticLib.Randomness;
+using MoreLinq;
 
 namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 {
@@ -13,46 +14,24 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 	/// multiple selections.
 	/// No duplicates in the same selections.
     /// </summary>
-	public class RouletteWheelSelectionWithRepetion : SelectionBase
+	public class RouletteWheelSelectionWithRepetion : RouletteWheelBase
     {
-		protected Dictionary<IGenome, float> genomAndFitn;
-		protected float totalFitness;
-
-		protected List<IGenome[]> usedPairs;
-
-        /// <summary>
-        /// What part of the genomes from total will participate in the
-		/// selection.
-        /// </summary>
-		protected float participantsPart = -1;
-
-        /// <summary>
-        /// The number of participants from total.
-		/// Set to -1 to select all.
-        /// </summary>
-		protected int participantsCount = -1;
+		protected Dictionary<IGenome, float> genomeAndFitn;      
+		protected List<IGenome[]> usedSetsOfGenomes;
 
 		public bool avoidPairRepetition = true;
-
+		public int nbOfTriesToAvoidRepetition = 100;
+		public int removeBestIfExceedsTriesCap = 10;
+        
 		public RouletteWheelSelectionWithRepetion(float participantsPart = 1f)
-		{
-			this.participantsPart = participantsPart;
-		}
+			: base(participantsPart)
+        {
+        }
 
 		public RouletteWheelSelectionWithRepetion(int participantsCount)
-		{
-			this.participantsCount = participantsCount;
-		}
-
-		protected int ComputeParticipantsCount(int totalCount)
-		{
-			if (participantsPart < 0 && participantsCount > 0)
-				return Math.Min(totalCount, participantsCount);
-			else if (participantsPart > 0 && participantsCount < 0)
-				return (int)Math.Round(totalCount * participantsPart);
-			else
-				throw new Exception("Invalid parameters");
-		}
+			: base(participantsCount)
+        {
+        }
 
         public override void Prepare(
             IList<IGenome> sampleGenomes,
@@ -75,25 +54,38 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
             else
                 minFitness = 0;
 
-			genomAndFitn = candidates.ToDictionary(
+			genomeAndFitn = candidates.ToDictionary(
 				x => x,
 				x => x.Fitness + minFitness + float.Epsilon);
-			totalFitness = genomAndFitn.Values.Sum();
-
-			usedPairs = new List<IGenome[]>();
+			         
+			usedSetsOfGenomes = new List<IGenome[]>();
         }
-
+  
+        /// <summary>
+		/// Try few times to find an unused pair (unless avoidPairRepetition
+		/// is false.
+        /// </summary>
         protected override IEnumerable<IGenome> PerformSelection(int nbToSelect)
         {
 			var result = new IGenome[nbToSelect];
 
-			var fitness = totalFitness;
-			var genomeAndFitnCpy = genomAndFitn.ToDictionary(
-				x => x.Key, x => x.Value);
-   
-			while (true)
-			{
-				for (int i = 0; i < totalNbToSelect; i++)
+			for (int tries = 0; tries < nbOfTriesToAvoidRepetition; tries++)
+			{            
+				// Remove the best genomes depending on the number of tries.
+                if (tries != 0 && tries % removeBestIfExceedsTriesCap == 0)
+                {
+                    var best = genomeAndFitn.MaxBy(x => x.Value).Key;
+					genomeAndFitn.Remove(best);
+                }
+    
+                // Use a copy of the dictionary so that the sets don't have
+                // repeating genomes.
+				var genomeAndFitnCpy = genomeAndFitn.ToDictionary(
+                    x => x.Key,
+					x => x.Value);
+				var fitness = genomeAndFitnCpy.Sum(x => x.Value);
+
+				for (int i = 0; i < nbToSelect; i++)
                 {
                     var targetFitness = GARandomManager.NextFloat(0, fitness);
                     IGenome target = null;
@@ -116,10 +108,41 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 
                     result[i] = target;
                 }
+
+				if (!avoidPairRepetition)
+					return result;
+
+				// Order the set, to make it work for cases like:
+				// (1, 5, 2) and (2, 1, 5).
+				result = result.OrderBy(x => x.Fitness).ToArray();
+				if (!SetOfGenomesAlreadyUsed(result))
+				{
+					usedSetsOfGenomes.Add(result);
+					return result;
+				}
 			}
             
-
-			return result;
+			throw new Exception("Too many tries for a selection.");
         }
+
+        /// <summary>
+        /// The genomes must be sorted the same way the used pairs are.
+        /// </summary>
+		private bool SetOfGenomesAlreadyUsed(IGenome[] genomes)
+		{
+			var intersection = usedSetsOfGenomes.FirstOrDefault(set =>
+			{
+				if (set.Length != genomes.Length)
+					return false;
+				
+				for (int i = 0; i < set.Length; i++)
+					if (set[i] != genomes[i])
+						return false;
+				
+				return true;
+			});
+
+			return intersection != null;
+		}
     }
 }
