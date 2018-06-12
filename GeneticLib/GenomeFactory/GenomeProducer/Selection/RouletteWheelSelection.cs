@@ -7,10 +7,6 @@ using GeneticLib.Genome;
 using GeneticLib.Randomness;
 using MoreLinq;
 
-// -20, 30, 40, -10
-// 50
-// -30, 70
-
 namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 {
 	public class RouletteWheelSelection : SelectionBase
@@ -37,7 +33,9 @@ namespace GeneticLib.GenomeFactory.GenomeProducer.Selection
 			else
 				minFitness = 0;
 
-			var genomAndFitn = candidates.ToDictionary(x => x, x => x.Fitness + minFitness);
+			var genomAndFitn = candidates.ToDictionary(
+				x => x,
+				x => x.Fitness + minFitness + float.Epsilon);
 			var fitnessSum = genomAndFitn.Values.Sum();
 
 			allParents = new Queue<IGenome>(totalNbToSelect);
