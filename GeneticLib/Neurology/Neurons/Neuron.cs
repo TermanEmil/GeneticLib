@@ -15,7 +15,7 @@ namespace GeneticLib.Neurology.Neurons
 
 	public class Neuron : IEquatable<Neuron>, IDeepClonable<Neuron>
     {
-		public virtual float Value { get; set; }
+		public virtual float Value { get; set; }      
 		public InnovationNumber InnovationNb { get; internal set; }
 
         // Defines how the values from incomming inputs are collected.

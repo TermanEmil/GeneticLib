@@ -18,8 +18,8 @@ namespace GeneticLib.Neurology.Synapses
 			new Tuple<float, float>(float.MinValue, float.MaxValue);
 
 		public int InnovationNb { get; }
-		public InnovationNumber Incoming { get; }
-		public InnovationNumber Outgoing { get; }
+		public InnovationNumber Incoming { get; set; }
+		public InnovationNumber Outgoing { get; set; }
 		public bool Enabled { get; set; } = true;
         
 		public Synapse(

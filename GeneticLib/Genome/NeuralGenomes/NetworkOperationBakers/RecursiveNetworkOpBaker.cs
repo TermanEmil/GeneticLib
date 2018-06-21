@@ -1,96 +1,161 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using GeneticLib.Neurology;
 using GeneticLib.Neurology.Neurons;
+using GeneticLib.Neurology.Synapses;
 
 namespace GeneticLib.Genome.NeuralGenomes.NetworkOperationBakers
 {
 	/// <summary>
     /// Starting from the outputs, calculate all required neurons.
+	/// Note: It does consider recurrent connections.
+	/// 
+	/// When the network is baked, a different network is created. This network
+	/// will not have RNNs. Instead, it will have MemoryNeurons. Before each
+	/// Network Computation, the memory neurons will receive the value of their
+	/// target neuron. Next, everything is like in a normal feed forward
+	/// network.
+	/// 
+	/// I chose this approach, because I couldn't think of any other way to
+	/// compute RNNs.
     /// </summary>
 	public class RecursiveNetworkOpBaker : INetworkOperationBaker
 	{
-		public bool IsBaked { get; set; } = false;
-		public BakedOperation[] BakedOperations { get; protected set; }
- 
-		public void BakeNetwork(NeuralGenome genome)
-        {
-			BakedOperations = BakeNetworkInternal(genome).ToArray();
-        }
+		public bool IsBaked => networkOperationBaker.IsBaked;
+		private INetworkOperationBaker networkOperationBaker;
+		private NeuralGenome refactoredGenome;
+		private NeuralGenome originalGenome;
+		private List<InnovationNumber> memoryNeuronsInnovs;
+
+		public RecursiveNetworkOpBaker()
+		{
+			networkOperationBaker = new FeedForwardOpBaker();
+		}
 
 		public INetworkOperationBaker Clone()
 		{
 			return new RecursiveNetworkOpBaker();
 		}
 
-		public void ComputeNetwork(NeuralGenome genome)
+		public void ComputeNetwork()
         {
 			if (!IsBaked)
-				BakeNetwork(genome);
-			
-			foreach (var op in BakedOperations)
-				op.Invoke();
+				throw new NetowrkIsNotBaked();
+
+            // Copy targets' values into memory neuron.
+			foreach (var memNeurInnov in memoryNeuronsInnovs)
+			{
+				var memNeur = refactoredGenome.Neurons[memNeurInnov] as MemoryNeuron;
+				memNeur.Value = refactoredGenome.Neurons[memNeur.targetNeuron].Value;
+			}
+
+            // Get the inputs.
+			foreach (var inputNeur in originalGenome.Inputs)
+			{
+				refactoredGenome.Neurons[inputNeur.InnovationNb].Value =
+                    originalGenome.Neurons[inputNeur.InnovationNb].Value;
+			}
+
+			networkOperationBaker.ComputeNetwork();
+
+            // Copy the results in the original.
+			foreach (var outputNeur in originalGenome.Outputs)
+			{
+				originalGenome.Neurons[outputNeur.InnovationNb].Value =
+					refactoredGenome.Neurons[outputNeur.InnovationNb].Value;
+			}
         }
 
-		protected IEnumerable<BakedOperation> BakeNetworkInternal(NeuralGenome genome)
-		{
-			var solvedNeurons = new HashSet<InnovationNumber>();
+		public void BakeNetwork(NeuralGenome genome)
+        {
+			originalGenome = genome;
 
-			foreach (var outNeuron in genome.Outputs)
-				foreach (var op in RecursiveOp(genome, outNeuron, solvedNeurons))
-					yield return op;
-		}
+			refactoredGenome = TransformNetworksRNNs(
+				genome,
+				out memoryNeuronsInnovs);
+			
+			networkOperationBaker.BakeNetwork(refactoredGenome);
+        }
         
-		private IEnumerable<BakedOperation> RecursiveOp(
-			NeuralGenome genome,
-			Neuron target,
-			HashSet<InnovationNumber> solvedNeurons)
+        /// <summary>
+        /// Transforms the network's RNNs.
+		/// Creates a copy of the given genome, where the RNNs are explicitly
+		/// separated into memory neurons.
+        /// </summary>
+		private NeuralGenome TransformNetworksRNNs(
+			NeuralGenome targetGenome,
+			out List<InnovationNumber> memoryNeurons)
 		{
-			if (typeof(InputNeuron).IsAssignableFrom(target.GetType()) ||
-				typeof(BiasNeuron).IsAssignableFrom(target.GetType()))
+			var genome = targetGenome.Clone() as NeuralGenome;
+			memoryNeurons = new List<InnovationNumber>();
+			var processedNeurons = new HashSet<InnovationNumber>();
+
+			var toProcess = new Queue<InnovationNumber>(
+				genome.Outputs.Select(x => x.InnovationNb));
+            
+			while (toProcess.Any())
 			{
-				solvedNeurons.Add(target.InnovationNb);
-				yield break;
-			}
+				var currentNeuron = toProcess.Dequeue();
+				processedNeurons.Add(currentNeuron);
 
-			if (!solvedNeurons.Contains(target.InnovationNb))
-                yield return () => target.Value = target.ValueCollector.InitialValue;
-			solvedNeurons.Add(target.InnovationNb);
-
-			var a = genome.GetGenesToNeuron(target);
-			foreach (var gene in a)
-			{
-				var synapse = gene.Synapse;
-				if (!synapse.Enabled)
-					continue;
-
-				if (!solvedNeurons.Contains(synapse.Incoming))
+				foreach (var gene in genome.GetGenesToNeuron(currentNeuron))
 				{
-					var neuronToSolve = genome.Neurons[synapse.Incoming];
-					foreach (var op in RecursiveOp(genome, neuronToSolve, solvedNeurons))
-						yield return op;
+					if (!gene.Synapse.Enabled)
+						continue;
+
+					var incomingNeuron = gene.Synapse.Incoming;
+
+					if (processedNeurons.Contains(incomingNeuron))
+					{
+						var memoryNeuron = new MemoryNeuron(
+							genome.Neurons.Max(x => x.Key) + 1,
+							incomingNeuron
+						);
+
+						memoryNeurons.Add(memoryNeuron.InnovationNb);
+
+						genome.Neurons.Add(
+							memoryNeuron.InnovationNb,
+							memoryNeuron);
+
+						gene.Synapse.Incoming = memoryNeuron.InnovationNb;
+					}
+					else
+					{
+						if (!toProcess.Contains(incomingNeuron))
+						    toProcess.Enqueue(incomingNeuron);
+					}
 				}
-
-				yield return () =>
-				{
-					var incommingNeurVal = genome.Neurons[synapse.Incoming].Value;
-					var newDelta = synapse.Weight * incommingNeurVal;
-					var newVal = target.ValueCollector.Collect(
-						target.Value,
-						newDelta);
-
-					target.Value = newVal;
-				};
 			}
 
-			if (target.ValueModifiers != null)
-				foreach (var valueModifier in target.ValueModifiers)
-					yield return () =>
-						target.Value = (float)valueModifier(target.Value);
-
-			yield return () =>
-				target.Value = (float)target.Activation(target.Value);
+			return genome;
 		}      
+	}
+ 
+	class MemoryNeuron : Neuron
+	{
+		public InnovationNumber targetNeuron;
+
+		public MemoryNeuron(
+			InnovationNumber innovationNumber,
+			InnovationNumber targetNeuron
+		) : base(innovationNumber, null)
+		{
+			this.targetNeuron = targetNeuron;
+		}
+
+		public override Neuron Clone()
+        {
+			return new MemoryNeuron(InnovationNb, targetNeuron);
+        }
+
+        public override Neuron Clone(InnovationNumber otherInnov)
+        {
+            var clone = Clone();
+            clone.InnovationNb = otherInnov;
+            return clone;
+        }
 	}
 }

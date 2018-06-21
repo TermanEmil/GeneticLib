@@ -18,6 +18,6 @@ namespace GeneticLib.Genome.NeuralGenomes.NetworkOperationBakers
 		bool IsBaked { get; }
 
 		void BakeNetwork(NeuralGenome genome);
-		void ComputeNetwork(NeuralGenome genome);
-    }
+		void ComputeNetwork();
+    }   
 }

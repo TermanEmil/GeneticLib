@@ -1,7 +1,7 @@
 ﻿using System;
 namespace GeneticLib.Neurology
 {
-	public struct InnovationNumber
+	public struct InnovationNumber : IComparable<InnovationNumber>
     {
 		public int value;
 
@@ -18,6 +18,11 @@ namespace GeneticLib.Neurology
 		public override string ToString()
 		{
 			return value.ToString();
+		}
+
+		public int CompareTo(InnovationNumber other)
+		{
+			return value.CompareTo(other.value);
 		}
 	}
 }

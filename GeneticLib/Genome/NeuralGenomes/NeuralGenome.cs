@@ -53,24 +53,22 @@ namespace GeneticLib.Genome.NeuralGenomes
 		public virtual void FeedNeuralNetwork(float[] inputs)
 		{
 			if (inputs.Length != Inputs.Length)
-				throw new Exception("The length of inputs don't match");
+				throw new Exception("The length of inputs doesn't match");
 
 			for (var i = 0; i < inputs.Length; i++)
 				Inputs[i].Value = inputs[i];
-
-			NetworkOperationBaker.ComputeNetwork(this);
+            
+			NetworkOperationBaker.ComputeNetwork();
 		}
 
-		public IEnumerable<NeuralGene> GetGenesToNeuron(Neuron target)
+		public IEnumerable<NeuralGene> GetGenesToNeuron(InnovationNumber target)
 		{
-			return NeuralGenes.Where(x =>
-			                         x.Synapse.Outgoing == target.InnovationNb);
+			return NeuralGenes.Where(x => x.Synapse.Outgoing == target);
 		}
 
-		public IEnumerable<NeuralGene> GetGenesOutOfNeuron(Neuron target)
+		public IEnumerable<NeuralGene> GetGenesOutOfNeuron(InnovationNumber target)
         {
-			return NeuralGenes.Where(x =>
-			                         x.Synapse.Incoming == target.InnovationNb);
+			return NeuralGenes.Where(x => x.Synapse.Incoming == target);
         }
 
 		public override IGenome CreateNew(Gene[] genes)
