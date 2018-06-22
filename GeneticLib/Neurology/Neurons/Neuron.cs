@@ -15,6 +15,12 @@ namespace GeneticLib.Neurology.Neurons
 
 	public class Neuron : IEquatable<Neuron>, IDeepClonable<Neuron>
     {
+		/// <summary>
+        /// Indicates wether this neuron is a starting neuron, like input or
+		/// bias.
+        /// </summary>
+		public virtual bool IsStarting => false;
+
 		public virtual float Value { get; set; }      
 		public InnovationNumber InnovationNb { get; internal set; }
 

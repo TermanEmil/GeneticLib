@@ -17,13 +17,12 @@ namespace GeneticLib.Genome.NeuralGenomes
         public Neuron[] Outputs { get; }
 		public Neuron[] Biasses { get; }
 
-		public INetworkOperationBaker NetworkOperationBaker { get; set; } =
-			new RecursiveNetworkOpBaker();
+		public INetworkOperationBaker NetworkOperationBaker { get; set; }
   
 		public NeuralGenome(
 			IEnumerable<Neuron> neurons,
 			NeuralGene[] connections)
-			: this(neurons, connections, new RecursiveNetworkOpBaker())
+			: this(neurons, connections, new FeedForwardOpBaker())
 		{
 		}
 
@@ -81,6 +80,12 @@ namespace GeneticLib.Genome.NeuralGenomes
 			};
 			
             return result;
+		}
+
+		public void ResetNeuronsValues()
+		{
+			foreach (var neuron in Neurons)
+				neuron.Value.Value = 0;
 		}
 	}
 }

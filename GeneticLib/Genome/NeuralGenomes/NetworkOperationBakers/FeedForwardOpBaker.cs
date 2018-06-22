@@ -41,6 +41,19 @@ namespace GeneticLib.Genome.NeuralGenomes.NetworkOperationBakers
         {
             var computedNeurons = new HashSet<InnovationNumber>();
    
+			foreach (var neuron in genome.Neurons.Values)
+			{
+				if (typeof(MemoryNeuron).IsAssignableFrom(neuron.GetType()))
+				{
+					yield return () =>
+					{
+						genome.Neurons[neuron.InnovationNb].Value =
+					        genome.Neurons[(neuron as MemoryNeuron).TargetNeuron]
+							      .Value;
+					};
+				}
+			}
+
             foreach (var outNeuron in genome.Outputs)
                 foreach (var op in RecursiveOp(genome, outNeuron, computedNeurons))
                     yield return op;
@@ -51,8 +64,7 @@ namespace GeneticLib.Genome.NeuralGenomes.NetworkOperationBakers
             Neuron target,
             HashSet<InnovationNumber> solvedNeurons)
         {
-            if (typeof(InputNeuron).IsAssignableFrom(target.GetType()) ||
-                typeof(BiasNeuron).IsAssignableFrom(target.GetType()))
+			if (target.IsStarting)
             {
                 solvedNeurons.Add(target.InnovationNb);
                 yield break;

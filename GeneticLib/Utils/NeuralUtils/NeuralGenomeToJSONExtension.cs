@@ -149,11 +149,32 @@ namespace GeneticLib.Utils.NeuralUtils
                 }
 			}
 
-			var remainingNeurons = remainingNodes.Select(n => new JsonNeuron
+			var remainingNeurons = remainingNodes.Select(n =>
 			{
-				x = NeuronPos[n.InnovationNb].X,
-				y = NeuronPos[n.InnovationNb].Y,
-				innov = n.InnovationNb,
+				JsonNeuron result;
+
+				if (typeof(MemoryNeuron).IsAssignableFrom(n.GetType()))
+				{
+					result = new JsonNeuron
+                    {
+                        x = NeuronPos[n.InnovationNb].X,
+                        y = NeuronPos[n.InnovationNb].Y,
+                        innov = n.InnovationNb,
+						color = new[] { 0.949f, 1, 0 },
+						label = string.Format("{0}<", (n as MemoryNeuron).TargetNeuron)
+                    };
+				}
+				else
+				{
+					result = new JsonNeuron
+					{
+						x = NeuronPos[n.InnovationNb].X,
+						y = NeuronPos[n.InnovationNb].Y,
+						innov = n.InnovationNb,
+					};
+				}
+
+				return result;
 			}).ToArray();
 
 			return inputNeurons.Concat(outputNeurons)

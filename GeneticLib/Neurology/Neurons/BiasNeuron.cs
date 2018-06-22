@@ -6,6 +6,8 @@ namespace GeneticLib.Neurology.Neurons
 {
 	public class BiasNeuron : Neuron
     {
+		public override bool IsStarting => true;
+
 		public override float Value
 		{
 			get => 1;         
