@@ -101,28 +101,31 @@ namespace GeneticLib.Utils.NeuralUtils
 				jsonNeurons.Add(jsonNeuron);
 
 				var start = target.NeuralGenes
-				                  .Select(x => x.Synapse)
-				                  .Where(x => target.Neurons[x.incoming].group != group.Key)
-				                  .FirstOrDefault(x => x.outgoing == innov);
+								  .Select(x => x.Synapse)
+								  .Where(x =>
+										 target.Neurons[x.incoming].group != group.Key &&
+				                         target.Neurons[x.outgoing].group == group.Key);
 				
 				var end = target.NeuralGenes
 								.Select(x => x.Synapse)
-				                .FirstOrDefault(x => target.Neurons[x.outgoing].group != group.Key);
+				                .Where(x =>
+				                       target.Neurons[x.incoming].group == group.Key &&
+				                       target.Neurons[x.outgoing].group != group.Key);
 
-				if (start != null)
+				foreach (var edge in start)
 					jsonEdges.Add(new JsonEdge
 					{
-						start = start.incoming,
+					    start = edge.incoming,
 						end = innov,
-						w = start.Weight
+					    w = edge.Weight
 					});
 
-				if (end != null)
+				foreach (var edge in end)
 					jsonEdges.Add(new JsonEdge
                     {
                         start = innov,
-                        end = end.outgoing,
-                        w = end.Weight
+					    end = edge.outgoing,
+					    w = edge.Weight
                     });
 			}
 		}
