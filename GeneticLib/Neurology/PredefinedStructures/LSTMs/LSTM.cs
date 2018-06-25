@@ -13,9 +13,10 @@ namespace GeneticLib.Neurology.PredefinedStructures.LSTMs
     /// </summary>
 	public static class LSTM
 	{
-		public static Neuron AddLSTM(
+		public static void AddLSTM(
 			this NeuralModelBase model,
-			Neuron input,
+			out Neuron input,
+			out Neuron output,
 			BiasNeuron biasNeuron = null,
 			WeightInitializer weightInitializer = null,
 			string groupName = "LSTM")
@@ -98,8 +99,6 @@ namespace GeneticLib.Neurology.PredefinedStructures.LSTMs
             );
 			model.AddConnection(finalMultMem, concatNeur, weightInitializer)
 			     .isTransferConnection = true;
-			model.AddConnection(input, concatNeur, weightInitializer)
-			     .isTransferConnection = true;
 
 			var cellStateMem = model.AddNeuron(
 				sampleNeuron: new MemoryNeuron(-1, additionGate.InnovationNb)
@@ -133,7 +132,9 @@ namespace GeneticLib.Neurology.PredefinedStructures.LSTMs
 			cellStateMem.group = groupName;
 			finalMultMem.group = groupName;
 
-			return finalMult;
+            // Assigning out's
+			input = concatNeur;
+			output = finalMult;
 		}
     }
 }

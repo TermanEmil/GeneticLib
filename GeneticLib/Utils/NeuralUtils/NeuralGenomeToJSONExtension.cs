@@ -84,8 +84,10 @@ namespace GeneticLib.Utils.NeuralUtils
 			foreach (var group in groups)
 			{
 				var innov = group.First().InnovationNb;
-				var pos = GetRandomPos(randomPosTries);
-				NeuronPos.Add(innov, pos);
+
+				if (!NeuronPos.ContainsKey(innov))
+					NeuronPos.Add(innov, GetRandomPos(randomPosTries));            
+				var pos = NeuronPos[innov];
 
 				var jsonNeuron = new JsonNeuron
 				{
@@ -101,26 +103,27 @@ namespace GeneticLib.Utils.NeuralUtils
 				var start = target.NeuralGenes
 				                  .Select(x => x.Synapse)
 				                  .Where(x => target.Neurons[x.incoming].group != group.Key)
-								  .First(x => x.outgoing == innov);
+				                  .FirstOrDefault(x => x.outgoing == innov);
+				
 				var end = target.NeuralGenes
 								.Select(x => x.Synapse)
-								.First(x => target.Neurons[x.outgoing].group != group.Key);
-                                
-				jsonEdges.AddRange(new[]
-				{
-					new JsonEdge
+				                .FirstOrDefault(x => target.Neurons[x.outgoing].group != group.Key);
+
+				if (start != null)
+					jsonEdges.Add(new JsonEdge
 					{
 						start = start.incoming,
 						end = innov,
 						w = start.Weight
-					},
-					new JsonEdge
+					});
+
+				if (end != null)
+					jsonEdges.Add(new JsonEdge
                     {
-						start = innov,
-						end = end.outgoing,
-						w = end.Weight
-                    }
-				});
+                        start = innov,
+                        end = end.outgoing,
+                        w = end.Weight
+                    });
 			}
 		}
 
