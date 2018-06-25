@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using GeneticLib.Genome;
 using GeneticLib.Genome.NeuralGenomes;
 using GeneticLib.Randomness;
@@ -22,8 +23,10 @@ namespace GeneticLib.GenomeFactory.Mutation.NeuralMutations
 		{
 			var delta = DeltaWeight();
 
-			genome.NeuralGenes.RandomChoice().Synapse.Weight +=
-	            (float)GARandomManager.Random.NextDouble(-delta, delta);
+			genome.NeuralGenes
+			      .Where(x => x.ExposedToMutations)
+			      .RandomChoice().Synapse.Weight +=
+				      (float)GARandomManager.Random.NextDouble(-delta, delta);
 		}
 	}
 }

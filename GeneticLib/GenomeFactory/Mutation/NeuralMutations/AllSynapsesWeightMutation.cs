@@ -29,7 +29,10 @@ namespace GeneticLib.GenomeFactory.Mutation.NeuralMutations
 			var deltaWeight = DeltaWeight();
 
 			var targets = genome.NeuralGenes
-								.Where(ng => rnd.NextDouble() <= SynapseMutationChance);
+								.Where(ng =>
+			                           ng.ExposedToMutations &&
+			                           rnd.NextDouble() <= SynapseMutationChance);
+			
 			foreach (var ng in targets)
 				ng.Synapse.Weight += (float)rnd.NextDouble(-deltaWeight, deltaWeight);
 		}

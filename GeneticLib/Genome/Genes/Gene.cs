@@ -6,15 +6,16 @@ namespace GeneticLib.Genome.Genes
 	public class Gene : IEquatable<Gene>
 	{
 		public IDeepClonable<object> Value { get; protected set; }
+		public virtual bool ExposedToMutations => true;
 
 		public Gene(IDeepClonable<object> value)
 		{
-			Value = value;
+			this.Value = value;
 		}
 
 		public Gene(Gene other)
 		{
-			Value = other.Value.Clone() as IDeepClonable<object>;
+			this.Value = other.Value.Clone() as IDeepClonable<object>;
 		}
 
 		public bool Equals(Gene other)

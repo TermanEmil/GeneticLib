@@ -33,9 +33,9 @@ namespace GeneticLib.Generations.InitialGeneration
                                               {
                                                   Weight = (float)kv.Value()
                                               });
-
+            
 			return new NeuralGenome(
-                neuralModel.Neurons.Values,
+				neuralModel.Neurons.Values.Select(x => x.Clone()).ToArray(),
                 synapses.Select(x => new NeuralGene(x)).ToArray(),
 				networkOperationBaker.Clone()
             );

@@ -45,141 +45,213 @@ namespace GeneticLib.Utils.NeuralUtils
 			float maxWeight = 1,
 			float edgeWidth = 3,
 			bool printNeuronText = true)
-		{         
+		{
+			var neurons = new List<JsonNeuron>();
+			neurons.AddRange(GetInputNeurons(target));
+			neurons.AddRange(GetOutputNeurons(target));
+			neurons.AddRange(GetRemainingNeurons(target));
+
+			var edges = GetJsonEdges(target);
+
+			ProcessNetworkGroups(target, neurons, edges);
+
 			var jsonObj = new
 			{
 				neuron_radius = neuronRadius,
 				max_weight = maxWeight,
 				edge_width = edgeWidth,
 				print_neurons_txt = printNeuronText,
-				neurons = GetNeuronsJsonObjs(target),
-				edges = GetJsonEdges(target)
+
+				neurons,
+				edges
 			};
 
 			var result = JsonConvert.SerializeObject(jsonObj);
 			return result;
 		}
 
-		#region GetNeurons
-		private static JsonNeuron[] GetNeuronsJsonObjs(NeuralGenome target)
+		private static void ProcessNetworkGroups(
+			NeuralGenome target,
+			List<JsonNeuron> jsonNeurons,
+			List<JsonEdge> jsonEdges)
 		{
-			float x, y;
-			float deltaY = 0;
+			var groups = target.Neurons.Values.Where(x => x.group != null)
+							   .GroupBy(x => x.group)
+							   .ToArray();
+			if (groups == null || groups.Length == 0)
+				return;
 
-			// Inputs
-			x = xPadding;
-			y = yPadding;
-			var inputs = target.Inputs.Concat(target.Biasses);
-			deltaY = (1f - 2 * yPadding) / inputs.Count();
-			var inputNeurons = inputs.Select(n =>
+			foreach (var group in groups)
 			{
-				JsonNeuron result;
+				var innov = group.First().InnovationNb;
+				var pos = GetRandomPos(randomPosTries);
+				NeuronPos.Add(innov, pos);
 
-				var pos = GetNeuronPos(n, x, y);
-				if (target.Inputs.Contains(n))
-				{
-					result = new JsonNeuron
-					{
-						x = pos.X,
-						y = pos.Y,
-						innov = n.InnovationNb,
-						color = new[] { 1f, 0.721f, 0.992f },
-						label = "I"
-					};
-				}
-				else
-				{
-					result = new JsonNeuron
-					{
-						x = pos.X,
-						y = pos.Y,
-						innov = n.InnovationNb,
-						color = new[] { 0.627f, 0.160f, 1f },
-						label = "B"
-					};
-				}
-				y += deltaY;
-				return result;
-			}).ToArray();
-            
-			// Outputs
-			x = 1f - xPadding;
-			if (target.Outputs.Count() == 1)
-				y = 0.5f;
-			else
-			{
-				y = yPadding;
-				deltaY = (1f - 2 * yPadding) / target.Outputs.Count();
-			}
-			var outputNeurons = target.Outputs.Select(n =>
-			{
-				var pos = GetNeuronPos(n, x, y);
-				var result = new JsonNeuron
+				var jsonNeuron = new JsonNeuron
 				{
 					x = pos.X,
 					y = pos.Y,
-					innov = n.InnovationNb,
-					color = new[] { 1f, 0.917f, 0.721f },
-					label = "O"
+					innov = innov,
+					color = new[] { 0.101F, 0.882F, 1 },
+					label = group.Key
 				};
 
-				y += deltaY;
-				return result;
-			}).ToArray();
+				jsonNeurons.Add(jsonNeuron);
 
-			// Remaining
-			var remainingNodes = target.Neurons.Values
-									   .Where(n =>
-											  !target.Inputs.Contains(n) &&
-											  !target.Outputs.Contains(n) &&
-											  !target.Biasses.Contains(n))
-									   .ToArray();
-            
-			//  Compute the positions
-			foreach (var node in remainingNodes)
-			{
-				Vector2 pos;
+				var start = target.NeuralGenes
+				                  .Select(x => x.Synapse)
+				                  .Where(x => target.Neurons[x.incoming].group != group.Key)
+								  .First(x => x.outgoing == innov);
+				var end = target.NeuralGenes
+								.Select(x => x.Synapse)
+								.First(x => target.Neurons[x.outgoing].group != group.Key);
+                                
+				jsonEdges.AddRange(new[]
+				{
+					new JsonEdge
+					{
+						start = start.incoming,
+						end = innov,
+						w = start.Weight
+					},
+					new JsonEdge
+                    {
+						start = innov,
+						end = end.outgoing,
+						w = end.Weight
+                    }
+				});
+			}
+		}
 
-				if (NeuronPos.ContainsKey(node.InnovationNb))
-					pos = NeuronPos[node.InnovationNb];
+		#region GetNeurons
+		private static JsonNeuron[] GetInputNeurons(NeuralGenome target)
+		{
+			float x, y;
+            float deltaY = 0;
+
+            // Inputs
+            x = xPadding;
+            y = yPadding;
+            var inputs = target.Inputs.Concat(target.Biasses);
+            deltaY = (1f - 2 * yPadding) / inputs.Count();
+            var inputNeurons = inputs.Select(n =>
+            {
+                JsonNeuron result;
+
+                var pos = GetNeuronPos(n, x, y);
+                if (target.Inputs.Contains(n))
+                {
+                    result = new JsonNeuron
+                    {
+                        x = pos.X,
+                        y = pos.Y,
+                        innov = n.InnovationNb,
+                        color = new[] { 1f, 0.721f, 0.992f },
+                        label = "I"
+                    };
+                }
                 else
                 {
-					pos = GetRandomPos(randomPosTries);
-					NeuronPos.Add(node.InnovationNb, pos);
+                    result = new JsonNeuron
+                    {
+                        x = pos.X,
+                        y = pos.Y,
+                        innov = n.InnovationNb,
+                        color = new[] { 0.627f, 0.160f, 1f },
+                        label = "B"
+                    };
                 }
-			}
+                y += deltaY;
+                return result;
+            }).ToArray();
 
-			var remainingNeurons = remainingNodes.Select(n =>
-			{
-				JsonNeuron result;
+			return inputNeurons;
+		}
 
-				if (typeof(MemoryNeuron).IsAssignableFrom(n.GetType()))
-				{
-					result = new JsonNeuron
+		private static JsonNeuron[] GetOutputNeurons(NeuralGenome target)
+		{
+			float x, y;
+            float deltaY = 0;
+
+			x = 1f - xPadding;
+            if (target.Outputs.Count() == 1)
+                y = 0.5f;
+            else
+            {
+                y = yPadding;
+                deltaY = (1f - 2 * yPadding) / target.Outputs.Count();
+            }
+            var outputNeurons = target.Outputs.Select(n =>
+            {
+                var pos = GetNeuronPos(n, x, y);
+                var result = new JsonNeuron
+                {
+                    x = pos.X,
+                    y = pos.Y,
+                    innov = n.InnovationNb,
+                    color = new[] { 1f, 0.917f, 0.721f },
+                    label = "O"
+                };
+
+                y += deltaY;
+                return result;
+            }).ToArray();
+
+			return outputNeurons;
+		}
+
+		private static JsonNeuron[] GetRemainingNeurons(NeuralGenome target)
+		{
+			var remainingNodes = target.Neurons.Values
+                                       .Where(n =>
+                                              !target.Inputs.Contains(n) &&
+                                              !target.Outputs.Contains(n) &&
+                                              !target.Biasses.Contains(n) &&
+                                              n.group == null)
+                                       .ToArray();
+
+            //  Compute the positions
+            foreach (var node in remainingNodes)
+            {
+                Vector2 pos;
+
+                if (!NeuronPos.ContainsKey(node.InnovationNb))
+                {
+                    pos = GetRandomPos(randomPosTries);
+                    NeuronPos.Add(node.InnovationNb, pos);
+                }
+            }
+
+            var remainingNeurons = remainingNodes.Select(n =>
+            {
+                JsonNeuron result;
+
+                if (typeof(MemoryNeuron).IsAssignableFrom(n.GetType()))
+                {
+                    result = new JsonNeuron
                     {
                         x = NeuronPos[n.InnovationNb].X,
                         y = NeuronPos[n.InnovationNb].Y,
                         innov = n.InnovationNb,
-						color = new[] { 0.949f, 1, 0 },
-						label = string.Format("{0}<", (n as MemoryNeuron).TargetNeuron)
+                        color = new[] { 0.949f, 1, 0 },
+                        label = string.Format("{0}<", (n as MemoryNeuron).TargetNeuron)
                     };
-				}
-				else
-				{
-					result = new JsonNeuron
-					{
-						x = NeuronPos[n.InnovationNb].X,
-						y = NeuronPos[n.InnovationNb].Y,
-						innov = n.InnovationNb,
-					};
-				}
+                }
+                else
+                {
+                    result = new JsonNeuron
+                    {
+                        x = NeuronPos[n.InnovationNb].X,
+                        y = NeuronPos[n.InnovationNb].Y,
+                        innov = n.InnovationNb,
+                    };
+                }
 
-				return result;
-			}).ToArray();
+                return result;
+            }).ToArray();
 
-			return inputNeurons.Concat(outputNeurons)
-							   .Concat(remainingNeurons)
-							   .ToArray();
+			return remainingNeurons;
 		}
 
 		private static Vector2 GetNeuronPos(Neuron neuron, float x, float y)
@@ -222,16 +294,18 @@ namespace GeneticLib.Utils.NeuralUtils
 		#endregion
 
 		#region GetEdges
-		private static JsonEdge[] GetJsonEdges(NeuralGenome target)
+		private static List<JsonEdge> GetJsonEdges(NeuralGenome target)
 		{
 			return target.NeuralGenes
 						 .Select(x => x.Synapse)
+				         .Where(x => target.Neurons[x.incoming].group == null)
+				         .Where(x => target.Neurons[x.outgoing].group == null)            
 						 .Select(x => new JsonEdge
 						 {
-							 start = x.Incoming,
-							 end = x.Outgoing,
+							 start = x.incoming,
+							 end = x.outgoing,
 							 w = x.Weight
-						 }).ToArray();
+		                 }).ToList();
 		}
 		#endregion
 	}

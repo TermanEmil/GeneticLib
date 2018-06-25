@@ -38,6 +38,8 @@
     <Folder Include="GenomeFactory\GenomeProducer\Selection\" />
     <Folder Include="Neurology\NeuralModels\" />
     <Folder Include="Neurology\NeuronValueModifiers\" />
+    <Folder Include="Neurology\PredefinedStructures\" />
+    <Folder Include="Neurology\PredefinedStructures\LSTMs\" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

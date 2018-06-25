@@ -62,12 +62,12 @@ namespace GeneticLib.Genome.NeuralGenomes
 
 		public IEnumerable<NeuralGene> GetGenesToNeuron(InnovationNumber target)
 		{
-			return NeuralGenes.Where(x => x.Synapse.Outgoing == target);
+			return NeuralGenes.Where(x => x.Synapse.outgoing == target);
 		}
 
 		public IEnumerable<NeuralGene> GetGenesOutOfNeuron(InnovationNumber target)
         {
-			return NeuralGenes.Where(x => x.Synapse.Incoming == target);
+			return NeuralGenes.Where(x => x.Synapse.incoming == target);
         }
 
 		public override IGenome CreateNew(Gene[] genes)

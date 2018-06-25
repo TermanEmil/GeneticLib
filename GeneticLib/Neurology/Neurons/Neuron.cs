@@ -33,7 +33,13 @@ namespace GeneticLib.Neurology.Neurons
 
         // The actual activation function.
 		public ActivationFunction Activation { get; set; }
-        
+
+        /// <summary>
+		/// The group it belongs to. For example, it can belong to an LSTM
+		/// structure.
+        /// </summary>
+		public string group = null;
+
 		public Neuron(int innovNb, ActivationFunction activation)
 		{
 			this.InnovationNb = innovNb;
@@ -47,6 +53,7 @@ namespace GeneticLib.Neurology.Neurons
             ValueCollector = other.ValueCollector?.Clone();
             ValueModifiers = other.ValueModifiers?.ToArray();
             Activation = other.Activation;
+			group = other.group;
 		}
 
 		public bool Equals(Neuron other)

@@ -28,7 +28,19 @@ namespace GeneticLib.Neurology.NeuralModels
 
 			this.defaultWeightInitializer = () => GARandomManager.NextFloat(-1f, 1f);
         }
-              
+        
+		public Synapse AddConnection(
+			Neuron startNeuron,
+			Neuron endNeuron,
+			WeightInitializer weightInitializer = null)
+		{
+			return AddConnection(
+				startNeuron.InnovationNb,
+				endNeuron.InnovationNb,
+				weightInitializer
+			);
+		}
+
 		public Synapse AddConnection(
 			InnovationNumber startNeuron,
 			InnovationNumber endNeuron,
@@ -40,7 +52,7 @@ namespace GeneticLib.Neurology.NeuralModels
 			var innov = synapseInnovNbTracker.GetHystoricalMark(startNeuron, endNeuron);
 			var result = new Synapse(innov, 0, startNeuron, endNeuron)
 			{
-				WeightConstraints = this.WeightConstraints
+				weightConstraints = this.WeightConstraints
 			};
 
 			if (weightInitializer == null)
@@ -83,7 +95,12 @@ namespace GeneticLib.Neurology.NeuralModels
 			return AddNeurons(bias, 1).First() as BiasNeuron;
 		}
 
-		public IList<Neuron> AddNeurons(Neuron sampleNeuron, int count)
+		public Neuron AddNeuron(Neuron sampleNeuron)
+		{
+			return AddNeurons(sampleNeuron, count: 1).First();
+		}
+
+		public IList<Neuron> AddNeurons(Neuron sampleNeuron, int count = 1)
 		{
 			var innovNb = GetFreeNeuronInnovNb();
 			var neurons = Enumerable.Range(0, count)

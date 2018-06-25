@@ -10,17 +10,23 @@ namespace GeneticLib.Neurology.Synapses
 		private float weight;
 		public float Weight
 		{
-			get => weight;
-			set => weight = value.Clamp(WeightConstraints.Item1, WeightConstraints.Item2);
+			get => isTransferConnection ? 1 : weight;
+			set => weight = value.Clamp(weightConstraints.Item1, weightConstraints.Item2);
 		}
 
-		public Tuple<float, float> WeightConstraints =
+		public Tuple<float, float> weightConstraints =
 			new Tuple<float, float>(float.MinValue, float.MaxValue);
 
 		public int InnovationNb { get; }
-		public InnovationNumber Incoming { get; set; }
-		public InnovationNumber Outgoing { get; set; }
-		public bool Enabled { get; set; } = true;
+		public InnovationNumber incoming;
+		public InnovationNumber outgoing;
+		public bool enabled = true;
+
+        /// <summary>
+        /// If the connection is simply a value transfer.
+		/// Useful for cases where a special structure is needed, like LSTM.
+        /// </summary>
+		public bool isTransferConnection = false;
         
 		public Synapse(
 			int innovNb,
@@ -28,8 +34,8 @@ namespace GeneticLib.Neurology.Synapses
 			InnovationNumber incomingNeuron,
 			InnovationNumber outgoingNeuron)
 		{
-			Incoming = incomingNeuron;
-			Outgoing = outgoingNeuron;
+			incoming = incomingNeuron;
+			outgoing = outgoingNeuron;
 			Weight = weight;      
 
 			InnovationNb = innovNb;
@@ -37,11 +43,11 @@ namespace GeneticLib.Neurology.Synapses
 
 		public Synapse(Synapse other)
 		{
-			Incoming = other.Incoming;
-			Outgoing = other.Outgoing;
+			incoming = other.incoming;
+			outgoing = other.outgoing;
 			Weight = other.Weight;
 
-			Enabled = other.Enabled;         
+			enabled = other.enabled;         
 			InnovationNb = other.InnovationNb;
 		}
 

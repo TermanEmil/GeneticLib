@@ -78,19 +78,19 @@ namespace GeneticLib.Genome.NeuralGenomes.NetworkOperationBakers
 			foreach (var gene in genome.GetGenesToNeuron(target.InnovationNb))
             {
                 var synapse = gene.Synapse;
-                if (!synapse.Enabled)
+                if (!synapse.enabled)
                     continue;
 
-                if (!solvedNeurons.Contains(synapse.Incoming))
+                if (!solvedNeurons.Contains(synapse.incoming))
                 {
-                    var neuronToSolve = genome.Neurons[synapse.Incoming];
+                    var neuronToSolve = genome.Neurons[synapse.incoming];
                     foreach (var op in RecursiveOp(genome, neuronToSolve, solvedNeurons))
                         yield return op;
                 }
 
                 yield return () =>
                 {
-                    var incommingNeurVal = genome.Neurons[synapse.Incoming].Value;
+                    var incommingNeurVal = genome.Neurons[synapse.incoming].Value;
                     var newDelta = synapse.Weight * incommingNeurVal;
                     var newVal = target.ValueCollector.Collect(
 						target.Value,

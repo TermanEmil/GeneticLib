@@ -18,7 +18,10 @@ namespace GeneticLib.Neurology.Neurons
 
         public override Neuron Clone()
         {
-            return new MemoryNeuron(InnovationNb, TargetNeuron);
+			return new MemoryNeuron(InnovationNb, TargetNeuron)
+			{
+				group = this.group
+			};
         }
 
         public override Neuron Clone(InnovationNumber otherInnov)
